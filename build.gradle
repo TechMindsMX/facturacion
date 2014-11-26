@@ -1,3 +1,9 @@
+ext {
+  facturacionConfigurationDir = "${System.getProperty('user.home')}/.timone"
+  currentEnvironment = project.hasProperty("environment") ? environment : "development"
+}
+
+
 buildscript {
   repositories {
     maven { url "https://repo.spring.io/libs-release" }
@@ -27,4 +33,9 @@ dependencies {
 
   compile 'org.xhtmlrenderer:core-renderer:R8'
   compile 'com.lowagie:itext:2.1.0'
+}
+
+tasks.withType(JavaExec) {
+  systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
+  systemProperty 'spring.config.location', '/Users/sohjiro/.timone/'
 }
