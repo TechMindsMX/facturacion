@@ -22,5 +22,9 @@ dependencies {
   compile 'org.codehaus.groovy:groovy-all:2.3.6'
   compile 'org.springframework.boot:spring-boot-starter-web'
   compile 'org.springframework.boot:spring-boot-starter-actuator'
-  testCompile "junit:junit"
+
+  testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+
+  compile 'org.xhtmlrenderer:core-renderer:R8'
+  compile 'com.lowagie:itext:2.1.0'
 }
