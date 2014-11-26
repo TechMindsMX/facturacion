@@ -1,4 +1,4 @@
-package com.tim.one
+package com.tim.one.billing
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.SpringApplication

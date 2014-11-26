@@ -1,4 +1,4 @@
-package com.tim.one.controller
+package com.tim.one.billing.controller
 
 import org.springframework.web.bind.annotation.*
 
