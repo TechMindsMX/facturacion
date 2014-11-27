@@ -1,6 +1,7 @@
 package com.tim.one.billing.services.impl
 
 import com.tim.one.billing.model.*
+import org.springframework.stereotype.*
 import com.tim.one.billing.services.FacturaServicio
 
 import com.lowagie.text.DocumentException
@@ -9,6 +10,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.parsers.DocumentBuilder
 
+@Service
 class FacturaServicioImpl implements FacturaServicio {
 
   @Override
@@ -59,14 +61,20 @@ class FacturaServicioImpl implements FacturaServicio {
 
   @Override
   public File generaPdfDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
+    println "da fuq!"
     Properties properties = new Properties()
     String propertyFileName = "config/facturacion.properties"
-    def inputStream = getClass().getClassLoader().getResourceAsStream(propertyFileName);
-    properties.load(inputStream);
+    println "propertyFileName : ${propertyFileName}"
+    def inputStream = getClass().getClassLoader().getResourceAsStream(propertyFileName)
+    println "inputStream : ${inputStream}"
+    properties.load(inputStream)
 
+    println "generando"
     Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar)
+    println "creando"
     def engine = new groovy.text.SimpleTemplateEngine()
     def file = new File(properties.get("factura.template"))
+    println "asignando"
     def text = file.text
 
     def xhtmlWriter = new StringWriter()
@@ -82,15 +90,15 @@ class FacturaServicioImpl implements FacturaServicio {
     def temporalFileName = "${System.currentTimeMillis()}.pdf".toString()
     OutputStream os = new FileOutputStream(temporalFileName)
     renderer.createPDF(os)
-    new File("facturacion/${temporalFileName}".toString())
+    new File("${temporalFileName}".toString())
   }
 
   @Override
   public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
     Properties properties = new Properties()
     String propertyFileName = "config/facturacion.properties"
-    def inputStream = getClass().getClassLoader().getResourceAsStream(propertyFileName);
-    properties.load(inputStream);
+    def inputStream = getClass().getClassLoader().getResourceAsStream(propertyFileName)
+    properties.load(inputStream)
 
     Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar)
     def engine = new groovy.text.SimpleTemplateEngine()
@@ -104,7 +112,16 @@ class FacturaServicioImpl implements FacturaServicio {
     xmlFileName
   }
 
-    // factura.total += factura.subTotal * 1.16
+  @Override
+  File showPdfFacturaWithFolio(String folio, String format) {
+    println "showing pdf"
+  }
+
+  @Override
+  File showXmlFacturaWithFolio(String folio, String format) {
+    println "showing xml"
+  }
+
   private def calculaSubtotal(factura) {
     factura.conceptos.sum(0) { it.valorUnitario * it.cantidad }
   }
@@ -120,7 +137,7 @@ class FacturaServicioImpl implements FacturaServicio {
     }
     impuestosTemp
   }
-  
+
   private def calculaTotal(factura) {
     def subTotal = calculaSubtotal(factura)
     def totalImpuestos = factura.impuestos.sum(0) { it.importe.toBigDecimal() }
