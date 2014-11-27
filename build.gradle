@@ -1,5 +1,5 @@
 ext {
-  facturacionConfigurationDir = "${System.getProperty('user.home')}/.timone"
+  facturacionConfigurationDir = "${System.getProperty('user.home')}/.timone/"
   currentEnvironment = project.hasProperty("environment") ? environment : "development"
 }
 
@@ -36,6 +36,7 @@ dependencies {
 }
 
 tasks.withType(JavaExec) {
+  println facturacionConfigurationDir
   systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
-  systemProperty 'spring.config.location', '/Users/sohjiro/.timone/'
+  systemProperty 'spring.config.location', facturacionConfigurationDir
 }
