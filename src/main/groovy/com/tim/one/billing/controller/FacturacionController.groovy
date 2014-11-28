@@ -14,6 +14,16 @@ class FacturacionController {
   @Autowired
   FacturaServicio facturaServicio
 
+  @RequestMapping(method = RequestMethod.POST, value="/save")
+  def createFacturaAndGenerateFolio() {
+    println "WITH FOLIO"
+  }
+
+  @RequestMapping(method = RequestMethod.POST, value="/create")
+  def createFacturaWithoutGeneratingFolio() {
+    println "WITHOUT FOLIO"
+  }
+
   @RequestMapping(method = RequestMethod.GET)
   def show(FacturaShowCommand command, HttpServletResponse response) {
     String format = command.format.toLowerCase().capitalize()
@@ -25,8 +35,9 @@ class FacturacionController {
     response.setHeader("Content-Disposition","attachment filename=\"" + file.getName() +"\"")
     FileCopyUtils.copy(fis, response.getOutputStream())
 
-    return null
+    null
   }
+
 }
 
 class FacturaShowCommand {
