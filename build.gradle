@@ -38,6 +38,11 @@ dependencies {
   compile 'com.lowagie:itext:2.1.0'
 }
 
+test {
+  systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
+  systemProperty 'spring.config.location', facturacionConfigurationDir
+}
+
 tasks.withType(JavaExec) {
   systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
   systemProperty 'spring.config.location', facturacionConfigurationDir
