@@ -18,10 +18,9 @@ class FacturacionController {
   def show(FacturaShowCommand command, HttpServletResponse response) {
     String format = command.format.toLowerCase().capitalize()
     def file = facturaServicio."show${format}FacturaWithFolio"(command.folio, command.format)
-    // def file = new File('1417200130652.xml')
     def fis = new FileInputStream(file)
 
-    response.setContentType("application/xml")
+    response.setContentType("application/${command.format}")
     response.setContentLength(((int) file.size()))
     response.setHeader("Content-Disposition","attachment filename=\"" + file.getName() +"\"")
     FileCopyUtils.copy(fis, response.getOutputStream())
@@ -32,5 +31,5 @@ class FacturacionController {
 
 class FacturaShowCommand {
   String folio
-  String format
+  String format = 'pdf'
 }

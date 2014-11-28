@@ -112,12 +112,14 @@ class FacturaServicioImpl implements FacturaServicio {
 
   @Override
   File showPdfFacturaWithFolio(String folio, String format) {
-    println "showing pdf"
+    def file= File.createTempFile("factura",".pdf")
+    file.text = "facturando"
+    file
   }
 
   @Override
   File showXmlFacturaWithFolio(String folio, String format) {
-    def file = new File("factura.xml")
+    def file= File.createTempFile("factura",".xml")
     file.text = """<?xml version='1.0' encoding='UTF-8'?>
     <note>
       <to>Tove</to>
