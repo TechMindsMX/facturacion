@@ -76,10 +76,6 @@ class FacturaServicioImpl implements FacturaServicio {
 
   @Override
   public File generaPdfDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
-    println templateLogo
-    println templatePdf
-    println templateXml
-
     Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar)
     def engine = new groovy.text.SimpleTemplateEngine()
     def file = new File(templatePdf)
