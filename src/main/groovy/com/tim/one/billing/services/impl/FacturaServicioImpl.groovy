@@ -91,10 +91,10 @@ class FacturaServicioImpl implements FacturaServicio {
     renderer.setDocumentFromString(xhtml)
     renderer.layout()
 
-    def temporalFileName = "${System.currentTimeMillis()}.pdf".toString()
-    OutputStream os = new FileOutputStream(temporalFileName)
+    def temporalFile= File.createTempFile(System.currentTimeMillis().toString(), ".pdf")
+    OutputStream os = new FileOutputStream(temporalFile)
     renderer.createPDF(os)
-    new File("${temporalFileName}".toString())
+    temporalFile
   }
 
   @Override
@@ -105,14 +105,15 @@ class FacturaServicioImpl implements FacturaServicio {
     def text = file.text
 
     def result = engine.createTemplate(text).make(factura.properties)
-    def temporalXmlFileName = "${System.currentTimeMillis()}.xml".toString()
-    def xmlFileName = new File(temporalXmlFileName)
-    xmlFileName.text = result
-    xmlFileName
+    def temporalXmlFile= File.createTempFile(System.currentTimeMillis().toString(),".xml")
+    temporalXmlFile.text = result
+    temporalXmlFile
   }
 
   @Override
   File showPdfFacturaWithFolio(String folio, String format) {
+    File temp = File.createTempFile("real",".howto")
+    temp.deleteOnExit()
     println "showing pdf"
   }
 
