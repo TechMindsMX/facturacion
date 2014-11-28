@@ -1,17 +1,32 @@
 package com.tim.one.billing.services.impl
 
-import com.tim.one.billing.model.*
 import org.springframework.stereotype.*
-import com.tim.one.billing.services.FacturaServicio
+import org.springframework.beans.factory.annotation.*
 
 import com.lowagie.text.DocumentException
 import org.xhtmlrenderer.pdf.ITextRenderer
 
+import com.tim.one.billing.model.*
+import com.tim.one.billing.services.FacturaServicio
+
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.parsers.DocumentBuilder
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.context.annotation.Configuration
+
 @Service
 class FacturaServicioImpl implements FacturaServicio {
+
+  @Value('${factura.template.logo}')
+  private String templateLogo
+
+  @Value('${factura.template.pdf}')
+  private String templatePdf
+
+  @Value('${factura.template.xml}')
+  private String templateXml
 
   @Override
   public Factura generaFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
@@ -61,24 +76,17 @@ class FacturaServicioImpl implements FacturaServicio {
 
   @Override
   public File generaPdfDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
-    println "da fuq!"
-    Properties properties = new Properties()
-    String propertyFileName = "config/facturacion.properties"
-    println "propertyFileName : ${propertyFileName}"
-    def inputStream = getClass().getClassLoader().getResourceAsStream(propertyFileName)
-    println "inputStream : ${inputStream}"
-    properties.load(inputStream)
+    println templateLogo
+    println templatePdf
+    println templateXml
 
-    println "generando"
     Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar)
-    println "creando"
     def engine = new groovy.text.SimpleTemplateEngine()
-    def file = new File(properties.get("factura.template"))
-    println "asignando"
+    def file = new File(templatePdf)
     def text = file.text
 
     def xhtmlWriter = new StringWriter()
-    def bindings = factura.properties + [logo:properties.get("empresa.logo")]
+    def bindings = factura.properties + [logo:templateLogo]
     engine.createTemplate(text).make(bindings).writeTo(xhtmlWriter)
     def xhtml = xhtmlWriter.toString()
     xhtmlWriter.close()
@@ -95,14 +103,9 @@ class FacturaServicioImpl implements FacturaServicio {
 
   @Override
   public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
-    Properties properties = new Properties()
-    String propertyFileName = "config/facturacion.properties"
-    def inputStream = getClass().getClassLoader().getResourceAsStream(propertyFileName)
-    properties.load(inputStream)
-
     Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar)
     def engine = new groovy.text.SimpleTemplateEngine()
-    def file = new File(properties.get("factura.template.xml"))
+    def file = new File(templateXml)
     def text = file.text
 
     def result = engine.createTemplate(text).make(factura.properties)
