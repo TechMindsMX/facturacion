@@ -112,14 +112,21 @@ class FacturaServicioImpl implements FacturaServicio {
 
   @Override
   File showPdfFacturaWithFolio(String folio, String format) {
-    File temp = File.createTempFile("real",".howto")
-    temp.deleteOnExit()
     println "showing pdf"
   }
 
   @Override
   File showXmlFacturaWithFolio(String folio, String format) {
-    println "showing xml"
+    def file = new File("factura.xml")
+    file.text = """<?xml version='1.0' encoding='UTF-8'?>
+    <note>
+      <to>Tove</to>
+      <from>Jani</from>
+      <heading>Reminder</heading>
+      <body>Don't forget me this weekend!'</body>
+    </note>
+    """
+    file
   }
 
   private def calculaSubtotal(factura) {
