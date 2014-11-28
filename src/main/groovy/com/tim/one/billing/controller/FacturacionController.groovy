@@ -17,8 +17,8 @@ class FacturacionController {
   @RequestMapping(method = RequestMethod.GET)
   def show(FacturaShowCommand command, HttpServletResponse response) {
     String format = command.format.toLowerCase().capitalize()
-    def factura = facturaServicio."show${format}FacturaWithFolio"(command.folio, command.format)
-    def file = new File('file.xml')
+    def file = facturaServicio."show${format}FacturaWithFolio"(command.folio, command.format)
+    // def file = new File('1417200130652.xml')
     def fis = new FileInputStream(file)
 
     response.setContentType("application/xml")
