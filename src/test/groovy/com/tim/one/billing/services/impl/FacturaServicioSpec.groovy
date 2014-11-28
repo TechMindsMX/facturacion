@@ -1,10 +1,30 @@
 package com.tim.one.billing.services.impl
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+import org.springframework.test.context.support.AnnotationConfigContextLoader
+import org.springframework.test.context.web.WebAppConfiguration
+
+import org.springframework.boot.test.SpringApplicationContextLoader
+import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.boot.test.IntegrationTest
+
 import com.tim.one.billing.model.*
+import com.tim.one.billing.*
+import com.tim.one.billing.services.FacturaServicio
+import com.tim.one.billing.services.impl.FacturaServicioImpl
 
 import spock.lang.Specification
+import org.junit.runner.RunWith
 
+import org.springframework.test.context.TestPropertySource;
+
+@ContextConfiguration(loader = SpringApplicationContextLoader, classes = Application)
 class FacturaServicioSpec extends Specification {
+
+  @Autowired
+  FacturaServicio facturaServicio
 
   def "Expedicion de factura por cien pesos"(){
     given: "Un emisor y receptor"
@@ -31,10 +51,8 @@ class FacturaServicioSpec extends Specification {
       concepto.cantidad = 1
       def conceptos = []
       conceptos << concepto
-    and: "Creando el componente de facturacion"
-      def facturaServcio = new FacturaServicioImpl()
     when: "Solicitamos la factura"
-      Factura factura = facturaServcio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago
@@ -89,10 +107,8 @@ class FacturaServicioSpec extends Specification {
         unidad:"kilogramos",
         valorUnitario:100.00
       )
-    and: "Creando el componente de facturacion"
-      def facturaServcio = new FacturaServicioImpl()
     when: "Solicitamos la factura"
-      Factura factura = facturaServcio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago
@@ -136,10 +152,8 @@ class FacturaServicioSpec extends Specification {
         unidad:"pieza",
         valorUnitario:100.00
       )
-    and: "Creando el componente de facturacion"
-      def facturaServcio = new FacturaServicioImpl()
     when: "Solicitamos la factura"
-      Factura factura = facturaServcio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago == "Pago en una sola exhibicion"
@@ -171,10 +185,8 @@ class FacturaServicioSpec extends Specification {
         moneda: "MXN",
         tipoDeCambio: "1.00"
       )
-    and: "Creando el componente de facturacion"
-      def facturaServcio = new FacturaServicioImpl()
     when: "Solicitamos la factura"
-      Factura factura = facturaServcio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
     then: "Verificamos la estructura de la factura"
       thrown RuntimeException
     where:
@@ -189,114 +201,5 @@ class FacturaServicioSpec extends Specification {
       new Contribuyente() | new Contribuyente() | [new Concepto(valorUnitario:100)]
   }
 
-  def "Verificando creacion de pdf"(){
-    given: "Un emisor y receptor"
-      def numeroDeCuentaDePago = "0123456789"
-      Contribuyente emisor = new Contribuyente()
-      Contribuyente receptor = new Contribuyente(cuenta:numeroDeCuentaDePago)
-    and: "Con datos fiscales del emisor"
-      emisor.datosFiscales = new DatosFiscales(
-        razonSocial: "INMOBILIARIA NUEVA SANTANDER SA DE CV",
-        rfc: "INS8602287KA ",
-        calle: "Lucas Aleman 83",
-        colonia: "Obrera",
-        delegacion: "Cuauhtemoc, Distrito Federal",
-        codigoPostal: "06800",
-        ciudad: "MÉXICO"
-      )
-    and: "Con datos fiscales del receptor"
-      receptor.datosFiscales = new DatosFiscales(
-        razonSocial: "Making Devs S.C.",
-        rfc: "MDE130712JA6",
-        calle: "Calzada Ermita Iztapalapa 278 Depto. 501",
-        colonia: "Sinatel",
-        delegacion: "Iztapalapa, Distrito Federal",
-        codigoPostal: "09470",
-        ciudad: "MÉXICO"
-      )
-    and: "Datos de la factura"
-      DatosDeFacturacion datosDeFacturacion = new DatosDeFacturacion(
-        uuid: "UUID",
-        formaDePago: "Pago en una sola exhibicion",
-        tipoDeComprobante: "ingreso",
-        metodoDePago: "efectivo",
-        lugarDeExpedicion: "Mexico DF",
-        condicionesDePago: "Contado",
-        numeroDeCuentaDePago: numeroDeCuentaDePago,
-        moneda: "MXN",
-        tipoDeCambio: "1.00"
-      )
-    and: "Una lista de conceptos a facturar"
-      def conceptos = []
-      conceptos << new Concepto(
-        cantidad:1,
-        descripcion:"descripcion1",
-        unidad:"pieza",
-        valorUnitario:100.00
-      )
-    and: "Creando el componente de facturacion"
-      def facturaServcio = new FacturaServicioImpl()
-    when: "Solicitamos la factura"
-      def file = facturaServcio.generaPdfDeFactura(datosDeFacturacion, emisor, receptor, conceptos)
-    then: "Verificamos la estructura de la factura"
-      file
-      file instanceof File
-      notThrown RuntimeException
-  }
-
-  def "Verificando creacion de xml"(){
-    given: "Un emisor y receptor"
-      def numeroDeCuentaDePago = "0123456789"
-      Contribuyente emisor = new Contribuyente()
-      Contribuyente receptor = new Contribuyente(cuenta:numeroDeCuentaDePago)
-    and: "Con datos fiscales del emisor"
-      emisor.datosFiscales = new DatosFiscales(
-        razonSocial: "INMOBILIARIA NUEVA SANTANDER SA DE CV",
-        rfc: "INS8602287KA ",
-        calle: "Lucas Aleman 83",
-        colonia: "Obrera",
-        delegacion: "Cuauhtemoc, Distrito Federal",
-        codigoPostal: "06800",
-        ciudad: "MÉXICO"
-      )
-    and: "Con datos fiscales del receptor"
-      receptor.datosFiscales = new DatosFiscales(
-        razonSocial: "Making Devs S.C.",
-        rfc: "MDE130712JA6",
-        calle: "Calzada Ermita Iztapalapa 278 Depto. 501",
-        colonia: "Sinatel",
-        delegacion: "Iztapalapa, Distrito Federal",
-        codigoPostal: "09470",
-        ciudad: "MÉXICO"
-      )
-    and: "Datos de la factura"
-      DatosDeFacturacion datosDeFacturacion = new DatosDeFacturacion(
-        uuid: "UUID",
-        formaDePago: "Pago en una sola exhibicion",
-        tipoDeComprobante: "ingreso",
-        metodoDePago: "efectivo",
-        lugarDeExpedicion: "Mexico DF",
-        condicionesDePago: "Contado",
-        numeroDeCuentaDePago: numeroDeCuentaDePago,
-        moneda: "MXN",
-        tipoDeCambio: "1.00"
-      )
-    and: "Una lista de conceptos a facturar"
-      def conceptos = []
-      conceptos << new Concepto(
-        cantidad:1,
-        descripcion:"descripcion1",
-        unidad:"pieza",
-        valorUnitario:100.00
-      )
-    and: "Creando el componente de facturacion"
-      def facturaServcio = new FacturaServicioImpl()
-    when: "Solicitamos la factura"
-      def file = facturaServcio.generaXmlDeFactura(datosDeFacturacion, emisor, receptor, conceptos)
-    then: "Verificamos la estructura de la factura"
-      file
-      file instanceof File
-      notThrown RuntimeException
-  }
 
 }
