@@ -1,7 +1,7 @@
 package com.tim.one.billing.services.impl
 
-import org.springframework.beans.factory.annotation.*
-import org.springframework.stereotype.*
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 import org.xhtmlrenderer.pdf.ITextRenderer
 
 import com.tim.one.billing.model.Concepto
@@ -9,7 +9,6 @@ import com.tim.one.billing.model.Contribuyente
 import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Factura
 import com.tim.one.billing.model.Impuesto
-
 import com.tim.one.billing.services.FacturaServicio
 
 @Service
