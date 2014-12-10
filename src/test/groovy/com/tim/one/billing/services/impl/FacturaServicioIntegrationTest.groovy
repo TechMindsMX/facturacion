@@ -1,11 +1,14 @@
 package com.tim.one.billing.services.impl
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
+
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.IntegrationTest
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
@@ -17,9 +20,8 @@ import com.tim.one.billing.model.DatosFiscales
 import com.tim.one.billing.services.FacturaServicio
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations=["classpath:/services-appctx.xml"])
+@ContextConfiguration(locations=["classpath:/services-appctx.xml", "classpath:/properties-appctx.xml"])
 @TestPropertySource(properties = ["factura.template.logo=/Users/sohjiro/.timone/factura/logo.png", "factura.template.pdf=/Users/sohjiro/.timone/factura/template.tof", "factura.template.xml=/Users/sohjiro/.timone/factura/template_xml.tof"])
-@IntegrationTest
 class FacturaServicioIntegrationTest {
 
   @Autowired
@@ -71,8 +73,7 @@ class FacturaServicioIntegrationTest {
     )
 
     def file = facturaServicio.generaPdfDeFactura(datosDeFacturacion, emisor, receptor, conceptos)
-
-    assertNotNull file
+    assertNotNull(file)
     assertTrue(file instanceof File)
   }
 

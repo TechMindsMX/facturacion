@@ -1,6 +1,8 @@
 package com.tim.one.billing.services.impl
 
-import org.springframework.beans.factory.annotation.Value
+import javax.annotation.PostConstruct
+
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.xhtmlrenderer.pdf.ITextRenderer
 
@@ -11,26 +13,30 @@ import com.tim.one.billing.model.Factura
 import com.tim.one.billing.model.Impuesto
 import com.tim.one.billing.services.FacturaServicio
 
-
 /**
  * @author sohjiro
  * @author josdem
- * @understands A class who can create, show and timbrar an factura.
+ * @understands Service who know how to 
  *
  */
 
 @Service
 class FacturaServicioImpl implements FacturaServicio {
+	
+	@Autowired
+	Properties properties
 
-  @Value('${factura.template.logo}')
-  private String templateLogo
+	String templateLogo
+  String templatePdf
+  String templateXml
 
-  @Value('${factura.template.pdf}')
-  private String templatePdf
-
-  @Value('${factura.template.xml}')
-  private String templateXml
-
+	@PostConstruct
+	public void initialize(){
+		templateLogo = properties.getProperty("factura.template.logo");
+		templatePdf = properties.getProperty("factura.template.pdf");
+		templateXml = properties.getProperty("factura.template.xml");
+	}
+	
   @Override
   public Factura generaFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
     if(!contribuyenteEmisor || !contribuyenteReceptor) {

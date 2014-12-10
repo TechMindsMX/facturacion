@@ -11,7 +11,7 @@ import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Factura
 import com.tim.one.billing.services.FacturaServicio
 
-@ContextConfiguration(locations=["classpath:/services-appctx.xml"])
+@ContextConfiguration(locations=["classpath:/services-appctx.xml", "classpath:/properties-appctx.xml"])
 class FacturaServicioSpec extends Specification {
 
   @Autowired

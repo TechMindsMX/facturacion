@@ -36,6 +36,7 @@ dependencies {
 		exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
 	}
 
+	testCompile "junit:junit:4.9"
 	providedCompile "javax.servlet:servlet-api:2.5"
 	compile 'org.codehaus.groovy:groovy-all:2.3.6'
 	compile "org.springframework:spring-webmvc:$springVersion"
@@ -48,13 +49,13 @@ dependencies {
 	compile 'com.lowagie:itext:2.1.0'
 }
 
-test {
-	systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
-	systemProperty 'spring.config.location', facturacionConfigurationDir
+def filesToInclude = ["facturacion-${currentEnvironment}.properties"]
+def toDirectory = 'src/main/resources'
+task settingEnvironment(type:Copy){
+	from facturacionConfigurationDir
+	into toDirectory
+	include filesToInclude
+	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
 }
 
-tasks.withType(JavaExec) {
-	systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
-	systemProperty 'spring.config.location', facturacionConfigurationDir
-	systemProperty 'server.port', 8082
-}
+processResources.dependsOn "settingEnvironment"
