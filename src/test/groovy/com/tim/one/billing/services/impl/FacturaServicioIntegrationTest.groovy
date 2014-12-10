@@ -1,13 +1,11 @@
 package com.tim.one.billing.services.impl
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertTrue
 
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
-
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.TestPropertySource
@@ -31,7 +29,7 @@ class FacturaServicioIntegrationTest {
   public ExpectedException exception = ExpectedException.none();
 
   @Test
-  public void deberiaCrearUnPdfConLosDatosDeLaFactura() {
+  public void shouldCreatePdfFileWithFacturaData() {
     def numeroDeCuentaDePago = "0123456789"
     Contribuyente emisor = new Contribuyente()
     Contribuyente receptor = new Contribuyente(cuenta:numeroDeCuentaDePago)
@@ -73,12 +71,15 @@ class FacturaServicioIntegrationTest {
     )
 
     def file = facturaServicio.generaPdfDeFactura(datosDeFacturacion, emisor, receptor, conceptos)
-    assertNotNull(file)
-    assertTrue(file instanceof File)
+		
+    assertTrue(file.isFile())
+		assertTrue(file.canRead())
+		assertTrue(file.size() > 0)
+		assertTrue(file.getAbsolutePath().endsWith("pdf"))
   }
 
   @Test
-  public void deberiaCrearUnXmlConLosDatosDeLaFactura() {
+  public void shouldCreateXmlFileWithFacturaData() {
     def numeroDeCuentaDePago = "0123456789"
     Contribuyente emisor = new Contribuyente()
     Contribuyente receptor = new Contribuyente(cuenta:numeroDeCuentaDePago)
@@ -121,8 +122,10 @@ class FacturaServicioIntegrationTest {
 
     def file = facturaServicio.generaXmlDeFactura(datosDeFacturacion, emisor, receptor, conceptos)
 
-    assertNotNull file
-    assertTrue(file instanceof File)
+    assertTrue(file.isFile())
+		assertTrue(file.canRead())
+		assertTrue(file.size() > 0)
+		assertTrue(file.getAbsolutePath().endsWith("xml"))
   }
 
 }
