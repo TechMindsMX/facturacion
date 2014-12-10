@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
 import com.tim.one.billing.command.FacturaCreateCommand
+import com.tim.one.billing.command.FacturaShowCommand
 import com.tim.one.billing.services.FacturaServicio
 
 @Controller
@@ -48,9 +49,4 @@ class FacturacionController {
 
     null
   }
-}
-
-class FacturaShowCommand {
-  String folio
-  String format = 'pdf'
 }
