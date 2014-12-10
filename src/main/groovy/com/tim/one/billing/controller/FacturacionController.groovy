@@ -8,10 +8,7 @@ import org.springframework.util.FileCopyUtils
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-import com.tim.one.billing.model.Concepto
-import com.tim.one.billing.model.Contribuyente
-import com.tim.one.billing.model.DatosDeFacturacion
-import com.tim.one.billing.model.Impuesto
+import com.tim.one.billing.command.FacturaCreateCommand
 import com.tim.one.billing.services.FacturaServicio
 
 @Controller
@@ -51,16 +48,6 @@ class FacturacionController {
 
     null
   }
-}
-
-class FacturaCreateCommand {
-  DatosDeFacturacion datosDeFacturacion
-  Contribuyente emisor
-  Contribuyente receptor
-
-  List<Concepto> conceptos
-  List<Impuesto> impuestos
-  String format = 'pdf'
 }
 
 class FacturaShowCommand {
