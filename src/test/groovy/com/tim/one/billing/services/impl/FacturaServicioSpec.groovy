@@ -2,25 +2,16 @@ package com.tim.one.billing.services.impl
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import org.springframework.test.context.support.AnnotationConfigContextLoader
-import org.springframework.test.context.web.WebAppConfiguration
-
-import org.springframework.boot.test.SpringApplicationContextLoader
-import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.boot.test.IntegrationTest
-
-import com.tim.one.billing.model.*
-import com.tim.one.billing.*
-import com.tim.one.billing.services.FacturaServicio
-import com.tim.one.billing.services.impl.FacturaServicioImpl
 
 import spock.lang.Specification
-import org.junit.runner.RunWith
 
-import org.springframework.test.context.TestPropertySource;
+import com.tim.one.billing.model.Concepto
+import com.tim.one.billing.model.Contribuyente
+import com.tim.one.billing.model.DatosDeFacturacion
+import com.tim.one.billing.model.Factura
+import com.tim.one.billing.services.FacturaServicio
 
-@ContextConfiguration(loader = SpringApplicationContextLoader, classes = Application)
+@ContextConfiguration(locations=["classpath:/services-appctx.xml"])
 class FacturaServicioSpec extends Specification {
 
   @Autowired

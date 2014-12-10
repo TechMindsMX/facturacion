@@ -1,26 +1,23 @@
 package com.tim.one.billing.services.impl
 
-import org.springframework.beans.factory.annotation.Autowired
-
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import org.springframework.test.context.TestPropertySource;
-
-import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.boot.test.IntegrationTest
-
-import com.tim.one.billing.model.*
-import com.tim.one.billing.Application
-import com.tim.one.billing.services.FacturaServicio
-
-import org.junit.Test
 import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.IntegrationTest
+import org.springframework.test.context.ContextConfiguration
+import org.springframework.test.context.TestPropertySource
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
-import static org.junit.Assert.*
+import com.tim.one.billing.model.Concepto
+import com.tim.one.billing.model.Contribuyente
+import com.tim.one.billing.model.DatosDeFacturacion
+import com.tim.one.billing.model.DatosFiscales
+import com.tim.one.billing.services.FacturaServicio
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
+@ContextConfiguration(locations=["classpath:/services-appctx.xml"])
 @TestPropertySource(properties = ["factura.template.logo=/Users/sohjiro/.timone/factura/logo.png", "factura.template.pdf=/Users/sohjiro/.timone/factura/template.tof", "factura.template.xml=/Users/sohjiro/.timone/factura/template_xml.tof"])
 @IntegrationTest
 class FacturaServicioIntegrationTest {
