@@ -1,15 +1,20 @@
 package com.tim.one.billing.controller
 
-import org.springframework.web.bind.annotation.*
-import org.springframework.beans.factory.annotation.Autowired
-import com.tim.one.billing.services.FacturaServicio
-import com.tim.one.billing.model.*
-
 import javax.servlet.http.HttpServletResponse
-import org.springframework.util.FileCopyUtils
 
-@RestController
-@RequestMapping("/facturacion")
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Controller
+import org.springframework.util.FileCopyUtils
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
+
+import com.tim.one.billing.model.Concepto
+import com.tim.one.billing.model.Contribuyente
+import com.tim.one.billing.model.DatosDeFacturacion
+import com.tim.one.billing.model.Impuesto
+import com.tim.one.billing.services.FacturaServicio
+
+@Controller
 class FacturacionController {
 
   @Autowired
@@ -46,7 +51,6 @@ class FacturacionController {
 
     null
   }
-
 }
 
 class FacturaCreateCommand {

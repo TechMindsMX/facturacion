@@ -1,20 +1,16 @@
 package com.tim.one.billing.services.impl
 
-import org.springframework.stereotype.*
 import org.springframework.beans.factory.annotation.*
-
-import com.lowagie.text.DocumentException
+import org.springframework.stereotype.*
 import org.xhtmlrenderer.pdf.ITextRenderer
 
-import com.tim.one.billing.model.*
+import com.tim.one.billing.model.Concepto
+import com.tim.one.billing.model.Contribuyente
+import com.tim.one.billing.model.DatosDeFacturacion
+import com.tim.one.billing.model.Factura
+import com.tim.one.billing.model.Impuesto
+
 import com.tim.one.billing.services.FacturaServicio
-
-import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.parsers.DocumentBuilder
-
-import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.context.annotation.Configuration
 
 @Service
 class FacturaServicioImpl implements FacturaServicio {

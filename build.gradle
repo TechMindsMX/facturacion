@@ -1,49 +1,60 @@
 ext {
-  facturacionConfigurationDir = "${System.getProperty('user.home')}/.timone/"
-  currentEnvironment = project.hasProperty("environment") ? environment : "development"
+	springVersion = "4.0.3.RELEASE"
+	facturacionConfigurationDir = "${System.getProperty('user.home')}/.factura/"
+	currentEnvironment = project.hasProperty("environment") ? environment : "development"
 }
-
 
 buildscript {
-  repositories {
-    maven { url "https://repo.spring.io/libs-release" }
-    mavenLocal()
-    mavenCentral()
-  }
-  dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.1.9.RELEASE")
-  }
+	repositories { jcenter() }
+
+	dependencies { classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.4' }
 }
 
-apply plugin: 'groovy'
-apply plugin: 'spring-boot'
+apply plugin:"java"
+apply plugin:'groovy'
+apply plugin:'eclipse'
 
 repositories {
-  mavenLocal()
-  mavenCentral()
-  maven { url "https://repo.spring.io/libs-release" }
+	mavenCentral()
+	mavenLocal()
+	maven { url "http://trama.mx:8082/archiva/repository/snapshots" }
+	maven { url "http://trama.mx:8082/archiva/repository/internal" }
 }
 
+apply plugin:"war"
+war.archiveName "facturacion.war"
+apply plugin:"jetty"
+httpPort=8081
+apply plugin: 'tomcat'
+tomcat { httpPort = 8081 }
+
 dependencies {
-  compile 'org.codehaus.groovy:groovy-all:2.3.6'
-  compile 'org.springframework.boot:spring-boot-starter-web'
-  compile 'org.springframework.boot:spring-boot-starter-actuator'
+	def tomcatVersion = '7.0.54'
+	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+			"org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}"
+	tomcat("org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}") {
+		exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
+	}
 
-  testCompile 'junit:junit:4.11'
-  testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
-  testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
-  testCompile 'org.springframework:spring-test:4.1.2.RELEASE'
+	providedCompile "javax.servlet:servlet-api:2.5"
+	compile 'org.codehaus.groovy:groovy-all:2.3.6'
+	compile "org.springframework:spring-webmvc:$springVersion"
+	testCompile "junit:junit:4.6"
+	testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+	testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
+	testCompile 'org.springframework:spring-test:4.1.2.RELEASE'
 
-  compile 'org.xhtmlrenderer:core-renderer:R8'
-  compile 'com.lowagie:itext:2.1.0'
+	compile 'org.xhtmlrenderer:core-renderer:R8'
+	compile 'com.lowagie:itext:2.1.0'
 }
 
 test {
-  systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
-  systemProperty 'spring.config.location', facturacionConfigurationDir
+	systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
+	systemProperty 'spring.config.location', facturacionConfigurationDir
 }
 
 tasks.withType(JavaExec) {
-  systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
-  systemProperty 'spring.config.location', facturacionConfigurationDir
+	systemProperty 'spring.config.name', "facturacion-${currentEnvironment}"
+	systemProperty 'spring.config.location', facturacionConfigurationDir
+	systemProperty 'server.port', 8082
 }
