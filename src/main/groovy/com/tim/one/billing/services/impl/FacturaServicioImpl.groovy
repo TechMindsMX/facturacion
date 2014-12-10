@@ -11,6 +11,14 @@ import com.tim.one.billing.model.Factura
 import com.tim.one.billing.model.Impuesto
 import com.tim.one.billing.services.FacturaServicio
 
+
+/**
+ * @author sohjiro
+ * @author josdem
+ * @understands A class who can create, show and timbrar an factura.
+ *
+ */
+
 @Service
 class FacturaServicioImpl implements FacturaServicio {
 

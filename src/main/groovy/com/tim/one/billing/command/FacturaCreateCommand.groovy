@@ -5,6 +5,7 @@ import com.tim.one.billing.model.Contribuyente
 import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Impuesto
 
+
 class FacturaCreateCommand {
 	DatosDeFacturacion datosDeFacturacion
   Contribuyente emisor

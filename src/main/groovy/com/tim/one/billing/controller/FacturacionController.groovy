@@ -12,41 +12,48 @@ import com.tim.one.billing.command.FacturaCreateCommand
 import com.tim.one.billing.command.FacturaShowCommand
 import com.tim.one.billing.services.FacturaServicio
 
+/**
+ * @author sohjiro
+ * @author josdem
+ * @understands A class who can create, show and timbrar an factura.
+ *
+ */
+
 @Controller
 class FacturacionController {
 
-  @Autowired
-  FacturaServicio facturaServicio
+	@Autowired
+	FacturaServicio facturaServicio
 
-  @RequestMapping(method = RequestMethod.POST, value="/save")
-  def createFacturaAndGenerateFolio() {
-    println "WITH FOLIO"
-  }
+	@RequestMapping(method = RequestMethod.POST, value="/save")
+	def createFacturaAndGenerateFolio() {
+		println "WITH FOLIO"
+	}
 
-  @RequestMapping(method = RequestMethod.POST, value="/create")
-  def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command) {
-    def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.contribuyenteEmisor, command.contribuyenteReceptor, command.conceptosAFacturar)
+	@RequestMapping(method = RequestMethod.POST, value="/create")
+	def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command) {
+		def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.contribuyenteEmisor, command.contribuyenteReceptor, command.conceptosAFacturar)
 
-    def fis = new FileInputStream(file)
-    response.setContentType("application/${command.format}")
-    response.setContentLength(((int) file.size()))
-    response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
-    FileCopyUtils.copy(fis, response.getOutputStream())
+		def fis = new FileInputStream(file)
+		response.setContentType("application/${command.format}")
+		response.setContentLength(((int) file.size()))
+		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
+		FileCopyUtils.copy(fis, response.getOutputStream())
 
-    null
-  }
+		null
+	}
 
-  @RequestMapping(method = RequestMethod.GET)
-  def show(FacturaShowCommand command, HttpServletResponse response) {
-    String format = command.format.toLowerCase().capitalize()
-    def file = facturaServicio."show${format}FacturaWithFolio"(command.folio, command.format)
+	@RequestMapping(method = RequestMethod.GET)
+	def show(FacturaShowCommand command, HttpServletResponse response) {
+		String format = command.format.toLowerCase().capitalize()
+		def file = facturaServicio."show${format}FacturaWithFolio"(command.folio, command.format)
 
-    def fis = new FileInputStream(file)
-    response.setContentType("application/${command.format}")
-    response.setContentLength(((int) file.size()))
-    response.setHeader("Content-Disposition","attachment filename=\"" + file.getName() +"\"")
-    FileCopyUtils.copy(fis, response.getOutputStream())
+		def fis = new FileInputStream(file)
+		response.setContentType("application/${command.format}")
+		response.setContentLength(((int) file.size()))
+		response.setHeader("Content-Disposition","attachment filename=\"" + file.getName() +"\"")
+		FileCopyUtils.copy(fis, response.getOutputStream())
 
-    null
-  }
+		null
+	}
 }
