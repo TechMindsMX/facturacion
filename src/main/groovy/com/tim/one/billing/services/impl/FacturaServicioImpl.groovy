@@ -13,10 +13,11 @@ import com.tim.one.billing.model.Factura
 import com.tim.one.billing.model.Impuesto
 import com.tim.one.billing.services.FacturaServicio
 
+
 /**
  * @author sohjiro
  * @author josdem
- * @understands Service who know how to 
+ * @understands Service who know how to generate and show factura
  *
  */
 
