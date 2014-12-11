@@ -111,6 +111,7 @@ class FacturaServicioImpl implements FacturaServicio {
   public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
     Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar)
     def engine = new groovy.text.SimpleTemplateEngine()
+		println "templateXml: " + templateXml
     def file = new File(templateXml)
     def text = file.text
 
