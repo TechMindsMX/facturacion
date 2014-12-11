@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import com.tim.one.billing.command.FacturaCreateCommand
 import com.tim.one.billing.command.FacturaShowCommand
 import com.tim.one.billing.services.FacturaServicio
+import com.tim.one.billing.services.TimbraServicio
 
 /**
  * @author sohjiro
@@ -24,6 +25,8 @@ class FacturacionController {
 
 	@Autowired
 	FacturaServicio facturaServicio
+	@Autowired
+	TimbraServicio timbraServicio
 
 	@RequestMapping(method = RequestMethod.POST, value="/save")
 	def createFacturaAndGenerateFolio() {
@@ -40,6 +43,8 @@ class FacturacionController {
 		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
 		FileCopyUtils.copy(fis, response.getOutputStream())
 
+		timbraServicio.timbra(fis)
+		
 		null
 	}
 
