@@ -43,7 +43,7 @@ class FacturacionController {
 		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
 		FileCopyUtils.copy(fis, response.getOutputStream())
 
-		timbraServicio.timbra(fis)
+		timbraServicio.timbra(file)
 		
 		null
 	}

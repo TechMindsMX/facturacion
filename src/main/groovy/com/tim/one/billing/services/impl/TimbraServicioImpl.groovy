@@ -1,6 +1,5 @@
 package com.tim.one.billing.services.impl
 
-import org.apache.commons.io.IOUtils
 import org.springframework.stereotype.Service
 
 import views.core.soap.services.apps.Incidencia
@@ -22,8 +21,8 @@ class TimbraServicioImpl implements TimbraServicio {
 	def application = stampSOAP.getApplication()
 
 	@Override
-	void timbra(InputStream inputStream) {
-		byte[] factura = IOUtils.toByteArray(inputStream)
+	void timbra(File file) {
+		byte[] factura = file.getBytes()
 		def acuse = application.stamp(factura, "cepdi@cepdi.mx", "@C3pd1#,,")
 
 		if (acuse.getXml() != null) {
