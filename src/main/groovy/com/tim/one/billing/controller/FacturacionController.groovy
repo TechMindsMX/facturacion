@@ -35,7 +35,7 @@ class FacturacionController {
 
 	@RequestMapping(method = RequestMethod.POST, value="/create")
 	def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command) {
-		def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.contribuyenteEmisor, command.contribuyenteReceptor, command.conceptosAFacturar)
+		def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
 
 		def fis = new FileInputStream(file)
 		response.setContentType("application/${command.format}")
