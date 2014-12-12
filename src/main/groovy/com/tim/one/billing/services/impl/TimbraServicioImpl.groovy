@@ -1,5 +1,7 @@
 package com.tim.one.billing.services.impl
 
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Service
 
 import views.core.soap.services.apps.Incidencia
@@ -19,6 +21,8 @@ class TimbraServicioImpl implements TimbraServicio {
 
 	def stampSOAP = new StampSOAP()
 	def application = stampSOAP.getApplication()
+	
+	Log log = LogFactory.getLog(getClass())
 
 	@Override
 	void timbra(File file) {
@@ -26,28 +30,28 @@ class TimbraServicioImpl implements TimbraServicio {
 		def acuse = application.stamp(factura, "cepdi@cepdi.mx", "@C3pd1#,,")
 
 		if (acuse.getXml() != null) {
-			println acuse.getXml().getValue()
+			log.info(acuse.getXml().getValue())
 		}
 		if (acuse.getCodEstatus() != null) {
-			println "Cod Status: " + acuse.getCodEstatus().getValue()
+			log.info("Cod Status: " + acuse.getCodEstatus().getValue())
 		}
 		if (acuse.getUUID() != null) {
-			println "UUID: " + acuse.getUUID().getValue()
+			log.info("UUID: " + acuse.getUUID().getValue())
 		}
 		if (acuse.getIncidencias() != null) {
 			IncidenciaArray array = acuse.getIncidencias().getValue()
 			for (Incidencia incidencia : array.getIncidencia()) {
 				if (incidencia.getCodigoError() != null) {
-					println "Codigo Error: " + incidencia.getCodigoError().getValue()
+					log.info("Codigo Error: " + incidencia.getCodigoError().getValue())
 				}
 				if (incidencia.getMensajeIncidencia() != null) {
-					println "Mensaje de incidencia: " + incidencia.getMensajeIncidencia().getValue()
+					log.info("Mensaje de incidencia: " + incidencia.getMensajeIncidencia().getValue())
 				}
 				if (incidencia.getRfcEmisor() != null) {
-					println "RFC Emisor: " + incidencia.getRfcEmisor().getValue()
+					log.info("RFC Emisor: " + incidencia.getRfcEmisor().getValue())
 				}
 				if (incidencia.getWorkProcessId() != null) {
-					println "Work Process Id: " + incidencia.getWorkProcessId().getValue()
+					log.info("Work Process Id: " + incidencia.getWorkProcessId().getValue())
 				}
 			}
 		}
