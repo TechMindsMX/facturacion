@@ -1,7 +1,12 @@
 package com.tim.one.billing.services.impl
 
+import java.util.Properties;
+
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service
 
 import views.core.soap.services.apps.Incidencia
@@ -18,16 +23,28 @@ import com.tim.one.billing.services.TimbraServicio
 
 @Service
 class TimbraServicioImpl implements TimbraServicio {
+	
+	@Autowired
+	Properties properties
 
 	def stampSOAP = new StampSOAP()
 	def application = stampSOAP.getApplication()
 	
+	String username
+	String password
+	
 	Log log = LogFactory.getLog(getClass())
+	
+	@PostConstruct
+	public void initialize(){
+		username = properties.getProperty("finkok.username");
+		password = properties.getProperty("finkok.password");
+	}
 
 	@Override
 	void timbra(File file) {
 		byte[] factura = file.getBytes()
-		def acuse = application.stamp(factura, "cepdi@cepdi.mx", "@C3pd1#,,")
+		def acuse = application.stamp(factura, username, password)
 
 		if (acuse.getXml() != null) {
 			log.info(acuse.getXml().getValue())
