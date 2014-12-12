@@ -12,7 +12,7 @@ import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Factura
 import com.tim.one.billing.model.Impuesto
 import com.tim.one.billing.services.FacturaServicio
-
+import com.tim.one.billing.state.ApplicationState
 
 /**
  * @author sohjiro
@@ -33,9 +33,9 @@ class FacturaServicioImpl implements FacturaServicio {
 
 	@PostConstruct
 	public void initialize(){
-		templateLogo = properties.getProperty("factura.template.logo");
-		templatePdf = properties.getProperty("factura.template.pdf");
-		templateXml = properties.getProperty("factura.template.xml");
+		templateLogo = properties.getProperty(ApplicationState.FACTURA_TEMPLATE_LOGO)
+		templatePdf = properties.getProperty(ApplicationState.FACTURA_TEMPLATE_PDF)
+		templateXml = properties.getProperty(ApplicationState.FACTURA_TEMPLATE_XML)
 	}
 	
   @Override
