@@ -14,6 +14,8 @@ import views.core.soap.services.apps.IncidenciaArray
 
 import com.finkok.facturacion.stamp.StampSOAP
 import com.tim.one.billing.services.TimbraServicio
+import com.tim.one.billing.state.ApplicationState
+
 
 /**
  * @author josdem
@@ -37,8 +39,8 @@ class TimbraServicioImpl implements TimbraServicio {
 	
 	@PostConstruct
 	public void initialize(){
-		username = properties.getProperty("finkok.username");
-		password = properties.getProperty("finkok.password");
+		username = properties.getProperty(ApplicationState.FINKOK_USERNAME)
+		password = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
 	}
 
 	@Override
