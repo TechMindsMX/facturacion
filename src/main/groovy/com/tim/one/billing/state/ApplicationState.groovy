@@ -7,5 +7,6 @@ interface ApplicationState {
 	static final String FACTURA_TEMPLATE_LOGO = "factura.template.logo"
 	static final String FACTURA_TEMPLATE_PDF = "factura.template.pdf"
 	static final String FACTURA_TEMPLATE_XML = "factura.template.xml"
+	static final String CADENA_ORIGINAL_PATH = "/home/josdem/.facturacion/cadenaoriginal_3_0.xslt"
 	
 }
