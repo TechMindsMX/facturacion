@@ -19,7 +19,6 @@ import com.tim.one.billing.services.FacturaServicio
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations=["classpath:/services-appctx.xml", "classpath:/properties-appctx.xml"])
-@TestPropertySource(properties = ["factura.template.logo=/Users/sohjiro/.timone/factura/logo.png", "factura.template.pdf=/Users/sohjiro/.timone/factura/template.tof", "factura.template.xml=/Users/sohjiro/.timone/factura/template_xml.tof"])
 class FacturaServicioIntegrationTest {
 
   @Autowired

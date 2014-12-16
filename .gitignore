@@ -8,3 +8,4 @@ build/
 .settings
 src/main/resources/*
 .groovy
+src/test/resources/*

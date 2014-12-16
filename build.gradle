@@ -51,10 +51,12 @@ dependencies {
 }
 
 def filesToInclude = ["facturacion-${currentEnvironment}.properties"]
-def toDirectory = 'src/main/resources'
+def toMainDirectory = 'src/main/resources'
+def toTestDirectory = 'src/test/resources'
 task settingEnvironment(type:Copy){
 	from facturacionConfigurationDir
-	into toDirectory
+	into toMainDirectory
+	into toTestDirectory
 	include filesToInclude
 	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
 }
