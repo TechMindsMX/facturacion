@@ -6,6 +6,8 @@ import javax.xml.transform.TransformerFactory
 import javax.xml.transform.stream.StreamResult
 import javax.xml.transform.stream.StreamSource
 
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -26,6 +28,8 @@ class CadenaOriginalServicioImpl implements CadenaOriginalServicio {
 	
 	String cadenaOriginalPath
 	
+	Log log = LogFactory.getLog(getClass())
+	
 	@PostConstruct
 	public void initialize(){
 		cadenaOriginalPath = properties.getProperty(ApplicationState.CADENA_ORIGINAL_PATH)
@@ -41,7 +45,9 @@ class CadenaOriginalServicioImpl implements CadenaOriginalServicio {
 
 		OutputStream output = new ByteArrayOutputStream()
 		transformer.transform(sourceXML, new StreamResult(output))
-		return new String(((ByteArrayOutputStream) output).toByteArray())
+		def cadenaOriginal = new String(((ByteArrayOutputStream) output).toByteArray())
+		log.info("cadenaOriginal: " + cadenaOriginal)
+		return cadenaOriginal
 	}
 	
 }

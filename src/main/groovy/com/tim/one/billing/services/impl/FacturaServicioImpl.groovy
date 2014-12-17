@@ -2,7 +2,8 @@ package com.tim.one.billing.services.impl
 
 import javax.annotation.PostConstruct
 
-import org.apache.commons.logging.Log;
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.xhtmlrenderer.pdf.ITextRenderer
@@ -31,6 +32,8 @@ class FacturaServicioImpl implements FacturaServicio {
 	String templateLogo
   String templatePdf
   String templateXml
+	
+	Log log = LogFactory.getLog(getClass())
 	
 	@PostConstruct
 	public void initialize(){
@@ -118,6 +121,7 @@ class FacturaServicioImpl implements FacturaServicio {
     def result = engine.createTemplate(text).make(factura.properties)
     def temporalXmlFile= File.createTempFile(System.currentTimeMillis().toString(),".xml")
     temporalXmlFile.text = result
+		log.info("facturaXml: " + temporalXmlFile)
     temporalXmlFile
   }
 
