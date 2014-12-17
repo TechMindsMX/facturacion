@@ -1,7 +1,9 @@
 package com.tim.one.billing.services
 
+import java.io.InputStream;
+
 interface SelloServicio {
 	
-	String generaSello(String cadenaOriginal)
+	String generaSello(InputStream archivoClavePrivada, String password, String cadenaOriginal)
 	
 }
