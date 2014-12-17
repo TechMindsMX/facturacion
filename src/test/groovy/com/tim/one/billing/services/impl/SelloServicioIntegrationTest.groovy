@@ -20,9 +20,9 @@ class SelloServicioIntegrationTest {
 
 	@Test
 	public void shouldCreateAValidSello() {
-		def startSello = "In+tymRk3C9ML+EwBTM8FJ1rP3qVlou8kLkdCX11OzVVmBU1w/ACQQBdJRM+ZXMeZqskZ9YP6fJZ"  
-		def endSello = "UlofATDRj9d+f7TL3iQ="
-		def cadenaOriginal = "||3.2|2014-12-15T15:30:59|ingreso|Pago en una sola exhibición|5.0000|MXP|5.8000|no aplica|Toluca, Edo. de México|AAD990814BP7|ACCEM SERVICIOS EMPRESARIALES SC|Calle PRUEBA|1525|121|Colonia de PRUEBA|Ciudad de PRUEBA|ref|Delegacion dePRUEBA|Michoacan|Mexico|25364|Regimen de Actividades Agricolas, Ganaderas, Silvicolas y Pesqueras|AGU900725BL5|EL ARTE GUADALUPANO SADE CV|FRAY JUAN DE ZUMARRAGA SECC1|21|LOC22 Y 25 COLVILLA DE GUAD|GUSTAVO AM|avenida|GUSTAVO AM|Distrito Federal|MEXICO|07050|1.000000|Pza.|Concepto Prueba|5.0000|5.0000|IVA|16.00|0.8000|0.8000||"
+		def startSello = "wTQmFk0EsQ4zCs6z8W55VKDtGZcdP"  
+		def endSello = "W0uLv8XhcI2QQIUNzu0yJQUrZ8="
+		def cadenaOriginal = "||3.2|2014-12-17T15:42:33|ingreso|PAGO EN UNA SOLA EXHIBICION|100.00|116.0000|TRANSFERENCIA ELECTRONICA|D.F.,MEXICO|DESCONOCIDO|AAD990814BP7|EMPRESA DEMO|REFORMA|BENITO JUAREZ|DISTRITO FEDERAL|MEXICO|34343|PERSONA FISCA|EWOK8102049D4|PUBLICO EN GENERAL|INSURGENTES|MEXICO|1|No aplica|Cafe americano,PZA|100.00|100.00|IVA|16.00|16.0000||"
 		
 		def sello = selloServicio.generaSello(cadenaOriginal)
 		

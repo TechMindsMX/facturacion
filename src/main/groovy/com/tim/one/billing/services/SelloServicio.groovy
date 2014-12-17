@@ -6,6 +6,5 @@ import java.io.InputStream;
 interface SelloServicio {
 	
 	String generaSello(String cadenaOriginal)
-	File sella(File file)
 	
 }

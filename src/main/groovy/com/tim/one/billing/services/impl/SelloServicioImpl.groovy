@@ -61,14 +61,5 @@ class SelloServicioImpl implements SelloServicio {
 		log.info("sello:" + selloDigital)
 		return selloDigital
 	}
-
-	@Override
-	public File sella(File file) {
-		def cadenaOriginal = cadenaOriginalServicio.generaCadenaOriginal(file)
-		def sello = selloServicio.generaSello(cadenaOriginal)
-		String content = FileUtils.readFileToString(file)
-		FileUtils.writeStringToFile(file, content.replaceAll("sello=", "sello=" + sello))
-		return file
-	}
 	
 }
