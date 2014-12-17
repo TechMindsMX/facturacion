@@ -4,6 +4,6 @@ import java.io.InputStream;
 
 interface SelloServicio {
 	
-	String generaSello(InputStream archivoClavePrivada, String password, String cadenaOriginal)
+	String generaSello(String cadenaOriginal)
 	
 }
