@@ -5,7 +5,6 @@ import java.security.Signature
 
 import javax.annotation.PostConstruct
 
-import org.apache.commons.io.IOUtils
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.apache.commons.ssl.PKCS8Key
@@ -42,8 +41,8 @@ class SelloServicioImpl implements SelloServicio {
 	
 	@Override
 	String generaSello(String cadenaOriginal) {
-		InputStream archivoClavePrivada = new FileInputStream(new File(keyPemPath));
-		byte[] clavePrivada = IOUtils.toByteArray(archivoClavePrivada)
+		File file = new File(keyPemPath);
+		byte[] clavePrivada = file.getBytes()
 		PKCS8Key pkcs8 = new PKCS8Key(clavePrivada, password.toCharArray())
 		PrivateKey pk = pkcs8.getPrivateKey()
 		Signature firma = Signature.getInstance("MD5withRSA")
