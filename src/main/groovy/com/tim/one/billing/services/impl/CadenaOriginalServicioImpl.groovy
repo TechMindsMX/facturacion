@@ -9,7 +9,7 @@ import javax.xml.transform.stream.StreamSource
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-import com.tim.one.billing.services.SelloServicio
+import com.tim.one.billing.services.CadenaOriginalServicio
 import com.tim.one.billing.state.ApplicationState
 
 /**
@@ -19,7 +19,7 @@ import com.tim.one.billing.state.ApplicationState
  */
 
 @Service
-class SelloServicioImpl implements SelloServicio {
+class CadenaOriginalServicioImpl implements CadenaOriginalServicio {
 	
 	@Autowired
 	Properties properties
