@@ -14,7 +14,7 @@ import com.tim.one.billing.state.ApplicationState
 
 /**
  * @author josdem
- * @understands Service who know how to generate sello from factura
+ * @understands Service who know how to generate cadenaOriginal string from factura
  *
  */
 
