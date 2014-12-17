@@ -32,7 +32,7 @@ class SelloServicioImpl implements SelloServicio {
 	}
 	
 	@Override
-	String generaSello(File file){
+	String generaCadenaOriginal(File file){
 		StreamSource sourceXSL = new StreamSource(new File(cadenaOriginalPath))
 		StreamSource sourceXML = new StreamSource(file)
 

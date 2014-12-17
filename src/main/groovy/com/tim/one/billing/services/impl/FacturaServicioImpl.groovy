@@ -2,6 +2,7 @@ package com.tim.one.billing.services.impl
 
 import javax.annotation.PostConstruct
 
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.xhtmlrenderer.pdf.ITextRenderer
@@ -30,7 +31,7 @@ class FacturaServicioImpl implements FacturaServicio {
 	String templateLogo
   String templatePdf
   String templateXml
-
+	
 	@PostConstruct
 	public void initialize(){
 		templateLogo = properties.getProperty(ApplicationState.FACTURA_TEMPLATE_LOGO)
