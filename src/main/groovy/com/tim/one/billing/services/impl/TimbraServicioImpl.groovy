@@ -1,18 +1,20 @@
 package com.tim.one.billing.services.impl
 
-import java.util.Properties;
+import javax.annotation.PostConstruct
 
-import javax.annotation.PostConstruct;
-
+import org.apache.commons.io.FileUtils
 import org.apache.commons.logging.Log
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.logging.LogFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 import views.core.soap.services.apps.Incidencia
 import views.core.soap.services.apps.IncidenciaArray
 
 import com.finkok.facturacion.stamp.StampSOAP
+import com.tim.one.billing.services.CadenaOriginalServicio
+import com.tim.one.billing.services.CfdiServicio;
+import com.tim.one.billing.services.SelloServicio
 import com.tim.one.billing.services.TimbraServicio
 import com.tim.one.billing.state.ApplicationState
 
@@ -25,6 +27,9 @@ import com.tim.one.billing.state.ApplicationState
 
 @Service
 class TimbraServicioImpl implements TimbraServicio {
+	
+	@Autowired
+	private CfdiServicio cfdiServicio
 	
 	@Autowired
 	Properties properties
@@ -45,7 +50,8 @@ class TimbraServicioImpl implements TimbraServicio {
 
 	@Override
 	void timbra(File file) {
-		byte[] factura = file.getBytes()
+		File fileSellado = cfdiServicio.sella(file)
+		byte[] factura = fileSellado.getBytes()
 		def acuse = application.stamp(factura, username, password)
 
 		if (acuse.getXml() != null) {

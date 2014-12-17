@@ -5,6 +5,7 @@ import java.security.Signature
 
 import javax.annotation.PostConstruct
 
+import org.apache.commons.io.FileUtils
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.apache.commons.ssl.PKCS8Key
@@ -57,8 +58,17 @@ class SelloServicioImpl implements SelloServicio {
 			log.warn(uee,uee)
 		}
 		
-		log.info(selloDigital)
+		log.info("sello:" + selloDigital)
 		return selloDigital
+	}
+
+	@Override
+	public File sella(File file) {
+		def cadenaOriginal = cadenaOriginalServicio.generaCadenaOriginal(file)
+		def sello = selloServicio.generaSello(cadenaOriginal)
+		String content = FileUtils.readFileToString(file)
+		FileUtils.writeStringToFile(file, content.replaceAll("sello=", "sello=" + sello))
+		return file
 	}
 	
 }

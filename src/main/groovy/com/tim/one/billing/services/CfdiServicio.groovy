@@ -3,9 +3,8 @@ package com.tim.one.billing.services
 import java.io.File;
 import java.io.InputStream;
 
-interface SelloServicio {
+interface CfdiServicio {
 	
-	String generaSello(String cadenaOriginal)
 	File sella(File file)
 	
 }

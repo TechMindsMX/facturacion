@@ -41,6 +41,7 @@ dependencies {
 	compile "log4j:log4j:1.2.17"
 	compile 'org.apache.servicemix.bundles:org.apache.servicemix.bundles.not-yet-commons-ssl:0.3.11_1'
 	compile 'org.codehaus.groovy:groovy-all:2.3.6'
+	compile 'commons-io:commons-io:1.4'
 	compile "org.springframework:spring-webmvc:$springVersion"
 	testCompile "junit:junit:4.6"
 	testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
@@ -52,12 +53,18 @@ dependencies {
 }
 
 def filesToInclude = ["facturacion-${currentEnvironment}.properties"]
-def toMainDirectory = 'src/main/resources'
-def toTestDirectory = 'src/test/resources'
-task settingEnvironment(type:Copy){
+def toDirectory = 'src/main/resources'
+task settingMainEnvironment(type:Copy){
 	from facturacionConfigurationDir
-	into toMainDirectory
-	into toTestDirectory
+	into toDirectory
+	include filesToInclude
+	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
+}
+
+toDirectory = 'src/test/resources'
+task settingTestEnvironment(type:Copy){
+	from facturacionConfigurationDir
+	into toDirectory
 	include filesToInclude
 	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
 }
@@ -68,4 +75,4 @@ task settingLog4jProperties(type:Copy){
 	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
 }
 
-processResources.dependsOn "settingEnvironment", "settingLog4jProperties"
+processResources.dependsOn "settingMainEnvironment", "settingTestEnvironment", "settingLog4jProperties"
