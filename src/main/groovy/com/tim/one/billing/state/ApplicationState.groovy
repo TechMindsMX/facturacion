@@ -8,7 +8,7 @@ interface ApplicationState {
 	static final String FACTURA_TEMPLATE_PDF = "factura.template.pdf"
 	static final String FACTURA_TEMPLATE_XML = "factura.template.xml"
 	static final String CADENA_ORIGINAL_PATH = "cadena.original.path"
-	static final String KEY_PEM_PATH = "key.pem.path"
-	static final String KEY_PEM_PASSWORD = "key.pem.password"
+	static final String KEY_PATH = "key.path"
+	static final String KEY_PASSWORD = "key.password"
 	
 }

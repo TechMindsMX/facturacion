@@ -5,17 +5,17 @@ import java.security.Signature
 
 import javax.annotation.PostConstruct
 
-import org.apache.commons.io.FileUtils
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.apache.commons.ssl.PKCS8Key
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-import sun.misc.BASE64Encoder
-
 import com.tim.one.billing.services.SelloServicio
 import com.tim.one.billing.state.ApplicationState
+
+import java.nio.file.Files
+import org.apache.commons.ssl.Base64
 
 /**
  * @author josdem
@@ -29,34 +29,29 @@ class SelloServicioImpl implements SelloServicio {
 	@Autowired
 	Properties properties
 	
-	String keyPemPath
+	String keyPath
 	String password
 
 	Log log = LogFactory.getLog(getClass())
 	
 	@PostConstruct
 	public void initialize(){
-		keyPemPath = properties.getProperty(ApplicationState.KEY_PEM_PATH)
-		password = properties.getProperty(ApplicationState.KEY_PEM_PASSWORD)
+		keyPath = properties.getProperty(ApplicationState.KEY_PATH)
+		password = properties.getProperty(ApplicationState.KEY_PASSWORD)
 	}
 	
 	@Override
 	String generaSello(String cadenaOriginal) {
-		File file = new File(keyPemPath);
-		byte[] clavePrivada = file.getBytes()
-		PKCS8Key pkcs8 = new PKCS8Key(clavePrivada, password.toCharArray())
-		PrivateKey pk = pkcs8.getPrivateKey()
-		Signature firma = Signature.getInstance("MD5withRSA")
-		firma.initSign(pk)
-		
-		String selloDigital = null
-		try {
-			firma.update(cadenaOriginal.getBytes("UTF-8"))
-			BASE64Encoder b64 = new BASE64Encoder()
-			selloDigital = b64.encode(firma.sign())
-		} catch (UnsupportedEncodingException uee) {
-			log.warn(uee,uee)
-		}
+    File KeyPath = new File(keyPath);
+    byte[] key = Files.readAllBytes(KeyPath.toPath());
+
+    PKCS8Key pkcs8 = new PKCS8Key(key, password.toCharArray());
+    PrivateKey pk = pkcs8.getPrivateKey();
+
+    Signature firma = Signature.getInstance("SHA1withRSA");
+    firma.initSign(pk);
+    firma.update(cadenaOriginal.getBytes("UTF-8"));
+    def selloDigital = new String (Base64.encodeBase64(firma.sign()),"UTF-8");
 		
 		log.info("sello:" + selloDigital)
 		return selloDigital
