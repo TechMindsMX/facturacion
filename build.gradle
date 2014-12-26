@@ -50,6 +50,7 @@ dependencies {
 
 	compile 'org.xhtmlrenderer:core-renderer:R8'
 	compile 'com.lowagie:itext:2.1.0'
+	compile files('libs/finkok.jar')
 }
 
 def filesToInclude = ["facturacion-${currentEnvironment}.properties"]
