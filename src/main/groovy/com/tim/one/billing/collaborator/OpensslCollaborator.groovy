@@ -1,11 +1,13 @@
 package com.tim.one.billing.collaborator
 
-import java.io.BufferedReader
-import java.io.DataInputStream
-import java.io.File
-import java.io.FileInputStream
-import java.io.IOException
-import java.io.InputStreamReader
+import javax.annotation.PostConstruct
+
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component;
+
+import com.tim.one.billing.state.ApplicationState
 
 /**
  *
@@ -17,13 +19,28 @@ import java.io.InputStreamReader
  * 
  */
 
+@Component
 class OpensslCollaborator {
 
-	private static String claveCsd = "12345678a"
-	private static String key = "C:\\Users\\Prueba\\AAD990814BP7_1.key"
-	private static String cer = "C:\\Users\\Prueba\\AAD990814BP7_1.cer"
-	private static String rutaDestino = "C:\\Users\\Prueba\\"
-	private static String claveFinkok = "password"
+	private static String claveCsd
+	private static String key
+	private static String cer
+	private static String rutaDestino
+	private static String claveFinkok
+	
+	@Autowired
+	Properties properties
+	
+	Log log = LogFactory.getLog(getClass())
+	
+	@PostConstruct
+	public void initialize(){
+		key = properties.getProperty(ApplicationState.KEY_PATH)
+		cer = properties.getProperty(ApplicationState.KEY_CERT)
+		rutaDestino = properties.getProperty(ApplicationState.FACTURA_HOME)
+		claveCsd = properties.getProperty(ApplicationState.KEY_PASSWORD)
+		claveFinkok = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
+	}
 
 	public OpensslCollaborator() {
 		super()

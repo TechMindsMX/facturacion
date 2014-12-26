@@ -13,8 +13,6 @@ import cancel.CancelSOAP
 import cancel.ObjectFactory
 import cancel.StringArray
 
-import com.finkok.facturacion.stamp.cancel.Openssl
-
 /**
  * @author josdem
  * @understands Service who know how to cancel a factura
@@ -36,19 +34,19 @@ class CancelaCollaborator {
 		JAXBElement<StringArray> array = ob.createUUIDSUuids(sA)
 		uuids.setUuids(array)
 
-		Openssl.creaCerPem()
-		Openssl.creaKeyPem()
-		Openssl.creaKeyEncriptado()
+		OpensslCollaborator.creaCerPem()
+		OpensslCollaborator.creaKeyPem()
+		OpensslCollaborator.creaKeyEncriptado()
 
 		byte[] cer = null
 		byte[] key = null
 		try {
-			cer = Openssl.leeArchivo(Openssl.getRutaDestino() + "cer.pem").getBytes("UTF-8")
-			key = Openssl.leeArchivo(Openssl.getRutaDestino() + "key.enc").getBytes("UTF-8")
+			cer = OpensslCollaborator.leeArchivo(OpensslCollaborator.getRutaDestino() + "cer.pem").getBytes("UTF-8")
+			key = OpensslCollaborator.leeArchivo(OpensslCollaborator.getRutaDestino() + "key.enc").getBytes("UTF-8")
 		} catch (UnsupportedEncodingException e) {
 		}
 
-		Openssl.deleteFiles()
+		OpensslCollaborator.deleteFiles()
 
 		CancelaCFDResult acuse = application.cancel(uuids, "usernameFinkok", "passwordFinkok", "RFCContribuyente", cer, key, true)
 
