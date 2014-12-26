@@ -8,14 +8,14 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
-import views.core.soap.services.apps.CancelaCFDResult
-import views.core.soap.services.apps.Folio
-import views.core.soap.services.apps.FolioArray
-import views.core.soap.services.apps.UUIDS
 import cancel.Application
 import cancel.CancelSOAP
+import cancel.CancelaCFDResult
+import cancel.Folio
+import cancel.FolioArray
 import cancel.ObjectFactory
 import cancel.StringArray
+import cancel.UUIDS
 
 import com.tim.one.billing.state.ApplicationState
 
@@ -47,13 +47,13 @@ class CancelaCollaborator {
 
 	void cancela(String uuid, String rfcContribuyente){
 		ObjectFactory ob = new ObjectFactory()
+		
+		UUIDS uuids = ob.createUUIDS();
+    StringArray sA = ob.createStringArray();
+    sA.getString().add(uuid);
 
-		UUIDS uuids = ob.createUUIDS()
-		StringArray sA = ob.createStringArray()
-		sA.getString().add(uuid)
-
-		JAXBElement<StringArray> array = ob.createUUIDSUuids(sA)
-		uuids.setUuids(array)
+    JAXBElement<StringArray> array = ob.createUUIDSUuids(sA);
+    uuids.setUuids(array);
 
 		OpensslCollaborator.creaCerPem()
 		OpensslCollaborator.creaKeyPem()
