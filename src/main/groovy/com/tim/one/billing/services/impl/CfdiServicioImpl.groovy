@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import com.tim.one.billing.collaborator.CancelaCollaborator;
 import com.tim.one.billing.services.CadenaOriginalServicio;
 import com.tim.one.billing.services.CfdiServicio
 import com.tim.one.billing.services.SelloServicio;
@@ -26,6 +27,8 @@ class CfdiServicioImpl implements CfdiServicio {
 	CadenaOriginalServicio cadenaOriginalServicio
 	@Autowired
 	SelloServicio selloServicio
+	@Autowired
+	CancelaCollaborator cancelaCollaborator
 	
 	@Override
 	public File sella(File file) {
@@ -34,6 +37,10 @@ class CfdiServicioImpl implements CfdiServicio {
 		String content = FileUtils.readFileToString(file)
 		FileUtils.writeStringToFile(file, content.replaceAll("sello=\"", "sello=\"" + sello))
 		return file
+	}
+	@Override
+	public void cancela(String uuid) {
+		cancelaCollaborator.cancela(uuid)
 	}
 	
 }
