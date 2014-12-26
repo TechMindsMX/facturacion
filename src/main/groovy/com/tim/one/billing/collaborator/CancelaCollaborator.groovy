@@ -8,11 +8,12 @@ import views.core.soap.services.apps.CancelaCFDResult
 import views.core.soap.services.apps.Folio
 import views.core.soap.services.apps.FolioArray
 import views.core.soap.services.apps.UUIDS
+import cancel.Application
+import cancel.CancelSOAP
+import cancel.ObjectFactory
+import cancel.StringArray
 
-import com.finkok.facturacion.cancel.Application
-import com.finkok.facturacion.cancel.CancelSOAP
-import com.finkok.facturacion.cancel.ObjectFactory
-import com.finkok.facturacion.cancellation.StringArray
+import com.finkok.facturacion.stamp.cancel.Openssl
 
 /**
  * @author josdem
@@ -26,45 +27,45 @@ class CancelaCollaborator {
 	Application application = cancelSOAP.getApplication()
 
 	void cancela(String uuid){
-		ObjectFactory ob = new ObjectFactory();
+		ObjectFactory ob = new ObjectFactory()
 
-		UUIDS uuids = ob.createUUIDS();
-		StringArray sA = ob.createStringArray();
-		sA.getString().add("UUID");
+		UUIDS uuids = ob.createUUIDS()
+		StringArray sA = ob.createStringArray()
+		sA.getString().add("UUID")
 
-		JAXBElement<StringArray> array = ob.createUUIDSUuids(sA);
-		uuids.setUuids(array);
+		JAXBElement<StringArray> array = ob.createUUIDSUuids(sA)
+		uuids.setUuids(array)
 
-		Openssl.creaCerPem();
-		Openssl.creaKeyPem();
-		Openssl.creaKeyEncriptado();
+		Openssl.creaCerPem()
+		Openssl.creaKeyPem()
+		Openssl.creaKeyEncriptado()
 
-		byte[] cer = null;
-		byte[] key = null;
+		byte[] cer = null
+		byte[] key = null
 		try {
-			cer = Openssl.leeArchivo(Openssl.getRutaDestino() + "cer.pem").getBytes("UTF-8");
-			key = Openssl.leeArchivo(Openssl.getRutaDestino() + "key.enc").getBytes("UTF-8");
+			cer = Openssl.leeArchivo(Openssl.getRutaDestino() + "cer.pem").getBytes("UTF-8")
+			key = Openssl.leeArchivo(Openssl.getRutaDestino() + "key.enc").getBytes("UTF-8")
 		} catch (UnsupportedEncodingException e) {
 		}
 
-		Openssl.deleteFiles();
+		Openssl.deleteFiles()
 
-		CancelaCFDResult acuse = application.cancel(uuids, "usernameFinkok", "passwordFinkok", "RFCContribuyente", cer, key, true);
+		CancelaCFDResult acuse = application.cancel(uuids, "usernameFinkok", "passwordFinkok", "RFCContribuyente", cer, key, true)
 
 		if (acuse.getAcuse() != null) {
-			System.out.println(acuse.getAcuse().getValue());
+			System.out.println(acuse.getAcuse().getValue())
 		}
 		if (acuse.getCodEstatus() != null) {
-			System.out.println("Codigo Estatus: " + acuse.getCodEstatus().getValue());
+			System.out.println("Codigo Estatus: " + acuse.getCodEstatus().getValue())
 		}
 		if (acuse.getFolios() != null) {
-			FolioArray folioArray = acuse.getFolios().getValue();
+			FolioArray folioArray = acuse.getFolios().getValue()
 			for (Folio f : folioArray.getFolio()) {
 				if (f.getUUID() != null) {
-					System.out.println("UUID: " + f.getUUID().getValue());
+					System.out.println("UUID: " + f.getUUID().getValue())
 				}
 				if (f.getEstatusUUID() != null) {
-					System.out.println("Estatus UUID: " + f.getEstatusUUID().getValue());
+					System.out.println("Estatus UUID: " + f.getEstatusUUID().getValue())
 				}
 			}
 		}
