@@ -28,9 +28,13 @@ import com.tim.one.billing.state.ApplicationState
 
 @Service
 class CancelaServicioImpl implements CancelaServicio {
+	
+	@Autowired
+	CfdiServicio cfdiServicio
 
 	@Override
 	public void cancelaFactura(String uuid) {
+		cfdiServicio.cancela(uuid)
 	}
 	
 }
