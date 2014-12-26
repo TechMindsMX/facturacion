@@ -38,9 +38,10 @@ class CfdiServicioImpl implements CfdiServicio {
 		FileUtils.writeStringToFile(file, content.replaceAll("sello=\"", "sello=\"" + sello))
 		return file
 	}
+	
 	@Override
-	public void cancela(String uuid) {
-		cancelaCollaborator.cancela(uuid)
+	public void cancela(String uuid, String rfcContribuyente) {
+		cancelaCollaborator.cancela(uuid, rfcContribuyente)
 	}
 	
 }

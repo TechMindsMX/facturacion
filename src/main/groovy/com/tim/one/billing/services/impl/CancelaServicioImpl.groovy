@@ -33,8 +33,8 @@ class CancelaServicioImpl implements CancelaServicio {
 	CfdiServicio cfdiServicio
 
 	@Override
-	public void cancelaFactura(String uuid) {
-		cfdiServicio.cancela(uuid)
+	public void cancelaFactura(String uuid, String rfcContribuyente) {
+		cfdiServicio.cancela(uuid, rfcContribuyente)
 	}
 	
 }

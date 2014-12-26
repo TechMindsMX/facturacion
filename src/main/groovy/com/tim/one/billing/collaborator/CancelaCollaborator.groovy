@@ -1,7 +1,11 @@
 package com.tim.one.billing.collaborator
 
+import javax.annotation.PostConstruct
 import javax.xml.bind.JAXBElement
 
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import views.core.soap.services.apps.CancelaCFDResult
@@ -13,6 +17,8 @@ import cancel.CancelSOAP
 import cancel.ObjectFactory
 import cancel.StringArray
 
+import com.tim.one.billing.state.ApplicationState
+
 /**
  * @author josdem
  * @understands Service who know how to cancel a factura
@@ -21,15 +27,30 @@ import cancel.StringArray
 
 @Component
 class CancelaCollaborator {
+	
+	private static String usernameFinkok
+	private static String passwordFinkok
+	
 	CancelSOAP cancelSOAP = new CancelSOAP()
 	Application application = cancelSOAP.getApplication()
+	
+	@Autowired
+	Properties properties
+	
+	Log log = LogFactory.getLog(getClass())
+	
+	@PostConstruct
+	public void initialize(){
+		usernameFinkok = properties.getProperty(ApplicationState.FINKOK_USERNAME)
+		passwordFinkok = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
+	}
 
-	void cancela(String uuid){
+	void cancela(String uuid, String rfcContribuyente){
 		ObjectFactory ob = new ObjectFactory()
 
 		UUIDS uuids = ob.createUUIDS()
 		StringArray sA = ob.createStringArray()
-		sA.getString().add("UUID")
+		sA.getString().add(uuid)
 
 		JAXBElement<StringArray> array = ob.createUUIDSUuids(sA)
 		uuids.setUuids(array)
@@ -48,22 +69,22 @@ class CancelaCollaborator {
 
 		OpensslCollaborator.deleteFiles()
 
-		CancelaCFDResult acuse = application.cancel(uuids, "usernameFinkok", "passwordFinkok", "RFCContribuyente", cer, key, true)
+		CancelaCFDResult acuse = application.cancel(uuids, usernameFinkok, passwordFinkok, rfcContribuyente, cer, key, true)
 
 		if (acuse.getAcuse() != null) {
-			System.out.println(acuse.getAcuse().getValue())
+			log.info(acuse.getAcuse().getValue())
 		}
 		if (acuse.getCodEstatus() != null) {
-			System.out.println("Codigo Estatus: " + acuse.getCodEstatus().getValue())
+			log.info("Codigo Estatus: " + acuse.getCodEstatus().getValue())
 		}
 		if (acuse.getFolios() != null) {
 			FolioArray folioArray = acuse.getFolios().getValue()
 			for (Folio f : folioArray.getFolio()) {
 				if (f.getUUID() != null) {
-					System.out.println("UUID: " + f.getUUID().getValue())
+					log.info("UUID: " + f.getUUID().getValue())
 				}
 				if (f.getEstatusUUID() != null) {
-					System.out.println("Estatus UUID: " + f.getEstatusUUID().getValue())
+					log.info("Estatus UUID: " + f.getEstatusUUID().getValue())
 				}
 			}
 		}

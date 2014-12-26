@@ -53,8 +53,8 @@ class FacturacionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/delete")
-	def deleteFactura(FacturaDeleteCommand command) {
-		cancelaServicio.cancelaFactura(command.uuid)
+	def cancelFactura(FacturaDeleteCommand command) {
+		cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

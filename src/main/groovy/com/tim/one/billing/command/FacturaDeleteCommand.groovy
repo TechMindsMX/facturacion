@@ -8,4 +8,5 @@ import com.tim.one.billing.model.Impuesto
 
 class FacturaDeleteCommand {
 	String uuid
+	String rfcContribuyente
 }
