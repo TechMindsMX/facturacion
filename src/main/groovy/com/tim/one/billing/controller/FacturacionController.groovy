@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
 import com.tim.one.billing.command.FacturaCreateCommand
+import com.tim.one.billing.command.FacturaDeleteCommand
 import com.tim.one.billing.command.FacturaShowCommand
+import com.tim.one.billing.services.CancelaServicio
 import com.tim.one.billing.services.FacturaServicio
 import com.tim.one.billing.services.TimbraServicio
 
@@ -27,6 +29,8 @@ class FacturacionController {
 	FacturaServicio facturaServicio
 	@Autowired
 	TimbraServicio timbraServicio
+	@Autowired
+	CancelaServicio cancelaServicio
 
 	@RequestMapping(method = RequestMethod.POST, value="/save")
 	def createFacturaAndGenerateFolio() {
@@ -46,6 +50,11 @@ class FacturacionController {
 		timbraServicio.timbra(file)
 		
 		null
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/delete")
+	def deleteFactura(FacturaDeleteCommand command) {
+		cancelaServicio.cancelaFactura(command.uuid)
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
