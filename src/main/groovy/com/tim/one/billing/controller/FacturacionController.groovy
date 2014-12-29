@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
 import com.tim.one.billing.command.FacturaCreateCommand
-import com.tim.one.billing.command.FacturaDeleteCommand
+import com.tim.one.billing.command.FacturaCancelCommand
 import com.tim.one.billing.command.FacturaShowCommand
 import com.tim.one.billing.services.CancelaServicio
 import com.tim.one.billing.services.FacturaServicio
@@ -53,7 +53,7 @@ class FacturacionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/cancel")
-	def cancelFactura(FacturaDeleteCommand command) {
+	def cancelFactura(FacturaCancelCommand command) {
 		cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
 	}
 

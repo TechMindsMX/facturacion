@@ -6,7 +6,7 @@ import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Impuesto
 
 
-class FacturaDeleteCommand {
+class FacturaCancelCommand {
 	String uuid
 	String rfcContribuyente
 }
