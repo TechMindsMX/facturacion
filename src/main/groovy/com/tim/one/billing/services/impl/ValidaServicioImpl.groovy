@@ -1,6 +1,7 @@
 package com.tim.one.billing.services.impl
 
 import java.io.File;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct
 
@@ -31,10 +32,22 @@ class ValidaServicioImpl implements ValidaServicio {
 	
 	@Autowired
 	ValidaCollaborator validaCollaborator
+	
+	@Autowired
+	Properties properties
+	
+	String username
+	String password
+	
+	@PostConstruct
+	public void initialize(){
+		username = properties.getProperty(ApplicationState.FINKOK_USERNAME)
+		password = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
+	}
 
 	@Override
 	public void valida(File file) {
-		validaCollaborator.valida()
+		validaCollaborator.valida(username, password, file)
 	}
 	
 }
