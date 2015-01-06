@@ -7,11 +7,13 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.util.FileCopyUtils
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 
-import com.tim.one.billing.command.FacturaCreateCommand
+import com.google.gson.Gson
 import com.tim.one.billing.command.FacturaCancelCommand
+import com.tim.one.billing.command.FacturaCreateCommand
 import com.tim.one.billing.command.FacturaShowCommand
 import com.tim.one.billing.command.FacturaValidCommand
 import com.tim.one.billing.services.CancelaServicio
@@ -46,7 +48,8 @@ class FacturacionController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value="/create")
-	def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command, HttpServletResponse response) {
+	def createFacturaWithoutGeneratingFolio(String json, HttpServletResponse response) {
+		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("command: " + command.dump())
 		def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
 
@@ -67,7 +70,9 @@ class FacturacionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/validate")
-	def validaFactura(FacturaValidCommand command) {
+	def validaFactura(@RequestBody String json) {
+		FacturaValidCommand command = new Gson().fromJson(json, FacturaValidCommand.class)
+		log.info("command: " + command.dump())
 		validaServicio.valida(command.xmlPath)
 	}
 
