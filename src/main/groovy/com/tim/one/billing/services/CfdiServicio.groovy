@@ -7,5 +7,6 @@ interface CfdiServicio {
 	
 	File sella(File file)
 	void cancela(String uuid, String rfcContribuyente)
+	void valida(File file)
 	
 }

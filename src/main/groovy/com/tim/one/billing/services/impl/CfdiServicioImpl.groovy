@@ -1,5 +1,7 @@
 package com.tim.one.billing.services.impl
 
+import java.io.File;
+
 import javax.annotation.PostConstruct
 
 import org.apache.commons.io.FileUtils
@@ -42,6 +44,11 @@ class CfdiServicioImpl implements CfdiServicio {
 	@Override
 	public void cancela(String uuid, String rfcContribuyente) {
 		cancelaCollaborator.cancela(uuid, rfcContribuyente)
+	}
+
+	@Override
+	public void valida(File file) {
+		
 	}
 	
 }
