@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod
 import com.tim.one.billing.command.FacturaCreateCommand
 import com.tim.one.billing.command.FacturaCancelCommand
 import com.tim.one.billing.command.FacturaShowCommand
+import com.tim.one.billing.command.FacturaValidCommand
 import com.tim.one.billing.services.CancelaServicio
 import com.tim.one.billing.services.FacturaServicio
 import com.tim.one.billing.services.TimbraServicio
+import com.tim.one.billing.services.ValidaServicio
 
 /**
  * @author sohjiro
@@ -31,7 +33,9 @@ class FacturacionController {
 	TimbraServicio timbraServicio
 	@Autowired
 	CancelaServicio cancelaServicio
-
+	@Autowired
+	ValidaServicio validaServicio
+	
 	@RequestMapping(method = RequestMethod.POST, value="/save")
 	def createFacturaAndGenerateFolio() {
 		println "WITH FOLIO"
@@ -55,6 +59,12 @@ class FacturacionController {
 	@RequestMapping(method = RequestMethod.POST, value="/cancel")
 	def cancelFactura(FacturaCancelCommand command) {
 		cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, value="/validate")
+	def validaFactura(FacturaValidCommand command) {
+		File xml = new File(command.xmlPath)
+		validaServicio.valida(xml)
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
