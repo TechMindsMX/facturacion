@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import com.tim.one.billing.collaborator.ValidaCollaborator;
 import com.tim.one.billing.services.CadenaOriginalServicio
 import com.tim.one.billing.services.CancelaServicio
 import com.tim.one.billing.services.CfdiServicio;
@@ -27,10 +28,13 @@ import com.tim.one.billing.state.ApplicationState
 
 @Service
 class ValidaServicioImpl implements ValidaServicio {
+	
+	@Autowired
+	ValidaCollaborator validaCollaborator
 
 	@Override
 	public void valida(File file) {
-		
+		validaCollaborator.valida()
 	}
 	
 }
