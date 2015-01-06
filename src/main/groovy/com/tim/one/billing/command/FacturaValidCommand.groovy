@@ -7,6 +7,5 @@ import com.tim.one.billing.model.Impuesto
 
 
 class FacturaValidCommand {
-	String rfcContribuyente
 	String xmlPath
 }

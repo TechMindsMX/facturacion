@@ -2,6 +2,8 @@ package com.tim.one.billing.controller
 
 import javax.servlet.http.HttpServletResponse
 
+import org.apache.commons.logging.Log
+import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.util.FileCopyUtils
@@ -36,6 +38,8 @@ class FacturacionController {
 	@Autowired
 	ValidaServicio validaServicio
 	
+	Log log = LogFactory.getLog(getClass())
+	
 	@RequestMapping(method = RequestMethod.POST, value="/save")
 	def createFacturaAndGenerateFolio() {
 		println "WITH FOLIO"
@@ -43,6 +47,7 @@ class FacturacionController {
 
 	@RequestMapping(method = RequestMethod.POST, value="/create")
 	def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command, HttpServletResponse response) {
+		log.info("command: " + command.dump())
 		def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
 
 		def fis = new FileInputStream(file)
@@ -63,8 +68,7 @@ class FacturacionController {
 	
 	@RequestMapping(method = RequestMethod.POST, value="/validate")
 	def validaFactura(FacturaValidCommand command) {
-		File xml = new File(command.xmlPath)
-		validaServicio.valida(xml)
+		validaServicio.valida(command.xmlPath)
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
