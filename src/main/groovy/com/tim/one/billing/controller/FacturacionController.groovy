@@ -2,6 +2,7 @@ package com.tim.one.billing.controller
 
 import javax.servlet.http.HttpServletResponse
 
+import org.apache.commons.io.FileUtils
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,14 +46,10 @@ class FacturacionController {
 	
 	Log log = LogFactory.getLog(getClass())
 	
-	@RequestMapping(method = RequestMethod.POST, value="/save")
-	def createFacturaAndGenerateFolio() {
-		println "WITH FOLIO"
-	}
-
 	@RequestMapping(method = RequestMethod.POST, value="/create")
-	def createFacturaWithoutGeneratingFolio(String json, HttpServletResponse response) {
+	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
 		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
+		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
 		def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
 
@@ -60,10 +57,11 @@ class FacturacionController {
 		response.setContentType("application/${command.format}")
 		response.setContentLength(((int) file.size()))
 		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
-		FileCopyUtils.copy(fis, response.getOutputStream())
 
-		def uuid = timbraServicio.timbra(file)
-		guardaServicio(uuid, file)
+		def acuse = timbraServicio.timbra(file)
+		def factura = guardaServicio.save(acuse)
+		
+		FileCopyUtils.copy(new FileInputStream(factura), response.getOutputStream())
 		
 		null
 	}

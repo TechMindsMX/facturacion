@@ -1,7 +1,9 @@
 package com.tim.one.billing.services
 
+import stamp.AcuseRecepcionCFDI
+
 interface GuardaServicio {
 	
-	void save(String uuid, File file)
+	File save(AcuseRecepcionCFDI acuse)
 	
 }

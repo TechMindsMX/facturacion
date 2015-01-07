@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import stamp.AcuseRecepcionCFDI
 import stamp.Application
 import stamp.Incidencia
 import stamp.IncidenciaArray
@@ -47,7 +48,7 @@ class TimbraServicioImpl implements TimbraServicio {
 	}
 
 	@Override
-	String timbra(File file) {
+	AcuseRecepcionCFDI timbra(File file) {
 		File fileSellado = cfdiServicio.sella(file)
 		byte[] factura = fileSellado.getBytes()
 		def acuse = application.stamp(factura, username, password)
@@ -59,9 +60,7 @@ class TimbraServicioImpl implements TimbraServicio {
 			log.info("Cod Status: " + acuse.getCodEstatus().getValue())
 		}
 		if (acuse.getUUID() != null) {
-			def uuid = acuse.getUUID().getValue()
-			log.info("UUID: " + uuid)
-			return uuid
+			log.info("UUID: " + acuse.getUUID().getValue())
 		}
 		if (acuse.getIncidencias() != null) {
 			IncidenciaArray array = acuse.getIncidencias().getValue()
@@ -80,5 +79,6 @@ class TimbraServicioImpl implements TimbraServicio {
 				}
 			}
 		}
+		return acuse
 	}
 }

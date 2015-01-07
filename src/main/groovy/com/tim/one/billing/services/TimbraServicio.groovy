@@ -1,7 +1,9 @@
 package com.tim.one.billing.services
 
+import stamp.AcuseRecepcionCFDI
+
 interface TimbraServicio {
 	
-	String timbra(File file)
+	AcuseRecepcionCFDI timbra(File file)
 	
 }
