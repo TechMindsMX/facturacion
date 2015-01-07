@@ -47,7 +47,7 @@ class TimbraServicioImpl implements TimbraServicio {
 	}
 
 	@Override
-	void timbra(File file) {
+	String timbra(File file) {
 		File fileSellado = cfdiServicio.sella(file)
 		byte[] factura = fileSellado.getBytes()
 		def acuse = application.stamp(factura, username, password)
@@ -59,7 +59,9 @@ class TimbraServicioImpl implements TimbraServicio {
 			log.info("Cod Status: " + acuse.getCodEstatus().getValue())
 		}
 		if (acuse.getUUID() != null) {
-			log.info("UUID: " + acuse.getUUID().getValue())
+			def uuid = acuse.getUUID().getValue()
+			log.info("UUID: " + uuid)
+			return uuid
 		}
 		if (acuse.getIncidencias() != null) {
 			IncidenciaArray array = acuse.getIncidencias().getValue()
