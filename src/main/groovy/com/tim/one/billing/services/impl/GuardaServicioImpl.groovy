@@ -1,5 +1,7 @@
 package com.tim.one.billing.services.impl
 
+import javax.annotation.PostConstruct
+
 import org.apache.commons.io.FileUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service
 import stamp.AcuseRecepcionCFDI
 
 import com.tim.one.billing.services.GuardaServicio
+import com.tim.one.billing.state.ApplicationState
 
 
 /**
@@ -18,13 +21,29 @@ import com.tim.one.billing.services.GuardaServicio
 @Service
 class GuardaServicioImpl implements GuardaServicio {
 	
+	@Autowired
+	Properties properties
+	
+	String facturaPath
+	
+	@PostConstruct
+	public void initialize(){
+		facturaPath = properties.getProperty(ApplicationState.FACTURA_HOME)
+	}
+	
 	@Override
 	File save(AcuseRecepcionCFDI acuse) {
 		def uuid = acuse.uuid.value
 		def facturaName = uuid?.replaceAll("-","")
-		def factura = new File(facturaName,".xml")
+		def factura = new File(facturaPath + ApplicationState.FILE_SEPARATOR + facturaName + ".xml")
+		println facturaPath
+		println factura.absolutePath
 		FileUtils.writeStringToFile(factura, acuse.getXml().getValue())
 		return factura
 	}
 	
 }
+
+
+
+

@@ -53,16 +53,15 @@ class FacturacionController {
 		log.info("command: " + command.dump())
 		def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
 
-		def fis = new FileInputStream(file)
-		response.setContentType("application/${command.format}")
-		response.setContentLength(((int) file.size()))
-		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
-
 		def acuse = timbraServicio.timbra(file)
 		def factura = guardaServicio.save(acuse)
 		
-		FileCopyUtils.copy(new FileInputStream(factura), response.getOutputStream())
-		
+		def fis = new FileInputStream(factura)
+		response.setContentType("application/${command.format}")
+		response.setContentLength(((int) factura.size()))
+		response.setHeader("Content-Disposition","attachment filename=\"" + factura.name +"\"")
+
+		FileCopyUtils.copy(fis, response.getOutputStream())
 		null
 	}
 	
