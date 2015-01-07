@@ -51,13 +51,13 @@ class FacturacionController {
 		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
-		def file = facturaServicio."genera${command.format}DeFactura"(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
+		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
 
 		def acuse = timbraServicio.timbra(file)
 		def factura = guardaServicio.save(acuse)
 		
 		def fis = new FileInputStream(factura)
-		response.setContentType("application/${command.format}")
+		response.setContentType("application/xml")
 		response.setContentLength(((int) factura.size()))
 		response.setHeader("Content-Disposition","attachment filename=\"" + factura.name +"\"")
 
@@ -66,15 +66,21 @@ class FacturacionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/cancel")
-	def cancelFactura(FacturaCancelCommand command) {
+	def cancelFactura(@RequestBody String json) {
+		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
+		log.info("CANCELING factura")
+		log.info("command: " + command.dump())
 		cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/validate")
 	def validaFactura(@RequestBody String json) {
 		FacturaValidCommand command = new Gson().fromJson(json, FacturaValidCommand.class)
+		log.info("VALIDATING factura")
 		log.info("command: " + command.dump())
-		validaServicio.valida(command.xmlPath)
+		def response = validaServicio.valida(command.xmlName)
+		log.info("response: " + response)
+		return response
 	}
 
 	@RequestMapping(method = RequestMethod.GET)

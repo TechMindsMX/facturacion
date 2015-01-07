@@ -36,8 +36,6 @@ class GuardaServicioImpl implements GuardaServicio {
 		def uuid = acuse.uuid.value
 		def facturaName = uuid?.replaceAll("-","")
 		def factura = new File(facturaPath + ApplicationState.FILE_SEPARATOR + facturaName + ".xml")
-		println facturaPath
-		println factura.absolutePath
 		FileUtils.writeStringToFile(factura, acuse.getXml().getValue())
 		return factura
 	}

@@ -38,6 +38,7 @@ class ValidaServicioImpl implements ValidaServicio {
 	
 	String username
 	String password
+	String xmlPath
 	
 	Log log = LogFactory.getLog(getClass())
 	
@@ -45,12 +46,15 @@ class ValidaServicioImpl implements ValidaServicio {
 	public void initialize(){
 		username = properties.getProperty(ApplicationState.FINKOK_USERNAME)
 		password = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
+		xmlPath = properties.getProperty(ApplicationState.FACTURA_HOME)
 	}
 
 	@Override
-	public void valida(String xmlPath) {
-		def response = validaCollaborator.ValidaComprobante(username, password, xmlPath)
-		log.info("response: " + response.dump())
+	String valida(String xmlName) {
+		def xmlNameFormatted = xmlName.replaceAll("-","")
+		def path = xmlPath + ApplicationState.FILE_SEPARATOR + xmlNameFormatted + ".xml"
+		def response = validaCollaborator.ValidaComprobante(username, password, path)
+		return response
 	}
 	
 }
