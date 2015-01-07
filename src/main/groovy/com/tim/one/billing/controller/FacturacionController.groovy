@@ -18,6 +18,7 @@ import com.tim.one.billing.command.FacturaShowCommand
 import com.tim.one.billing.command.FacturaValidCommand
 import com.tim.one.billing.services.CancelaServicio
 import com.tim.one.billing.services.FacturaServicio
+import com.tim.one.billing.services.GuardaServicio
 import com.tim.one.billing.services.TimbraServicio
 import com.tim.one.billing.services.ValidaServicio
 
@@ -39,6 +40,8 @@ class FacturacionController {
 	CancelaServicio cancelaServicio
 	@Autowired
 	ValidaServicio validaServicio
+	@Autowired
+	GuardaServicio guardaServicio
 	
 	Log log = LogFactory.getLog(getClass())
 	
@@ -59,7 +62,8 @@ class FacturacionController {
 		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
 		FileCopyUtils.copy(fis, response.getOutputStream())
 
-		timbraServicio.timbra(file)
+		def uuid = timbraServicio.timbra(file)
+		guardaServicio(uuid, file)
 		
 		null
 	}
