@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+import com.tim.one.billing.collaborator.CancelaCollaborator;
 import com.tim.one.billing.services.CadenaOriginalServicio
 import com.tim.one.billing.services.CancelaServicio
 import com.tim.one.billing.services.CfdiServicio;
@@ -26,11 +27,11 @@ import com.tim.one.billing.state.ApplicationState
 class CancelaServicioImpl implements CancelaServicio {
 	
 	@Autowired
-	CfdiServicio cfdiServicio
+	CancelaCollaborator cancelaCollaborator
 
 	@Override
 	public void cancelaFactura(String uuid, String rfcContribuyente) {
-		cfdiServicio.cancela(uuid, rfcContribuyente)
+		cancelaCollaborator.cancela(uuid, rfcContribuyente)
 	}
 	
 }

@@ -29,8 +29,6 @@ class CfdiServicioImpl implements CfdiServicio {
 	CadenaOriginalServicio cadenaOriginalServicio
 	@Autowired
 	SelloServicio selloServicio
-	@Autowired
-	CancelaCollaborator cancelaCollaborator
 	
 	@Override
 	public File sella(File file) {
@@ -39,16 +37,6 @@ class CfdiServicioImpl implements CfdiServicio {
 		String content = FileUtils.readFileToString(file)
 		FileUtils.writeStringToFile(file, content.replaceAll("sello=\"", "sello=\"" + sello))
 		return file
-	}
-	
-	@Override
-	public void cancela(String uuid, String rfcContribuyente) {
-		cancelaCollaborator.cancela(uuid, rfcContribuyente)
-	}
-
-	@Override
-	public void valida(File file) {
-		
 	}
 	
 }
