@@ -46,7 +46,7 @@ class CancelaCollaborator {
 		passwordFinkok = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
 	}
 
-	void cancela(String uuid, String rfcContribuyente){
+	CancelaCFDResult cancela(String uuid, String rfcContribuyente){
 		ObjectFactory ob = new ObjectFactory()
 		
 		UUIDS uuids = ob.createUUIDS();
@@ -89,5 +89,7 @@ class CancelaCollaborator {
 				}
 			}
 		}
+		
+		return acuse
 	}
 }
