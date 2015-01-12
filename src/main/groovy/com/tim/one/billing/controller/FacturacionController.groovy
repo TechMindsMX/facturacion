@@ -49,8 +49,8 @@ class FacturacionController {
 	Log log = LogFactory.getLog(getClass())
 	
 	@RequestMapping(method = RequestMethod.POST, value="/create")
-	def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command, HttpServletResponse response) {
-//		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
+	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
+		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
 		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
@@ -68,16 +68,16 @@ class FacturacionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/cancel")
-	CancelResponse cancelFactura(FacturaCancelCommand command) {
-//		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
+	CancelResponse cancelFactura(@RequestBody String json) {
+		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
 		log.info("CANCELING factura")
 		log.info("command: " + command.dump())
 		return cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/validate")
-	def validaFactura(FacturaValidCommand command) {
-//		FacturaValidCommand command = new Gson().fromJson(json, FacturaValidCommand.class)
+	def validaFactura(@RequestBody String json) {
+		FacturaValidCommand command = new Gson().fromJson(json, FacturaValidCommand.class)
 		log.info("VALIDATING factura")
 		log.info("command: " + command.dump())
 		def response = validaServicio.valida(command.xmlName)
