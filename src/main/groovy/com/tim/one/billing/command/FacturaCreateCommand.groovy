@@ -13,5 +13,5 @@ class FacturaCreateCommand {
 
   List<Concepto> conceptos
   List<Impuesto> impuestos
-  String format = 'pdf'
+  Boolean timbra = true
 }

@@ -49,19 +49,21 @@ class FacturacionController {
 	Log log = LogFactory.getLog(getClass())
 	
 	@RequestMapping(method = RequestMethod.POST, value="/create")
-	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
-		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
+	def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command, HttpServletResponse response) {
+//		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
 		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos)
 
-		def acuse = timbraServicio.timbra(file)
-		def factura = guardaServicio.save(acuse)
+		if(command.getTimbra()){
+			def acuse = timbraServicio.timbra(file)
+			file = guardaServicio.save(acuse)
+		}
 		
-		def fis = new FileInputStream(factura)
+		def fis = new FileInputStream(file)
 		response.setContentType("application/xml")
-		response.setContentLength(((int) factura.size()))
-		response.setHeader("Content-Disposition","attachment filename=\"" + factura.name +"\"")
+		response.setContentLength(((int) file.size()))
+		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
 
 		FileCopyUtils.copy(fis, response.getOutputStream())
 		null
