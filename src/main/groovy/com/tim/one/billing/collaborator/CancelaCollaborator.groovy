@@ -63,7 +63,7 @@ class CancelaCollaborator {
 		byte[] cer = null
 		byte[] key = null
 		try {
-			cer = OpensslCollaborator.leeArchivo(OpensslCollaborator.getRutaDestino() + "cer.pem").getBytes("UTF-8")
+			cer = OpensslCollaborator.leeArchivo(OpensslCollaborator.getRutaDestino() + "key.pem").getBytes("UTF-8")
 			key = OpensslCollaborator.leeArchivo(OpensslCollaborator.getRutaDestino() + "key.enc").getBytes("UTF-8")
 		} catch (UnsupportedEncodingException e) {
 		}
