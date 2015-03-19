@@ -9,5 +9,6 @@
 
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="com.tim.one.billing.services"></context:component-scan>
+	<context:component-scan base-package="com.tim.one.billing.collaborator"></context:component-scan>
 	
 </beans>

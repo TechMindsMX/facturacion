@@ -62,8 +62,8 @@ class FacturaServicioSpec extends Specification {
       factura.conceptos.get(0).valorUnitario == 100.00
       factura.conceptos.get(0).unidad == "NO APLICA"
       factura.conceptos.get(0).cantidad == 1
-      factura.impuestos.get(0).importe == "16.0000"
-      factura.impuestos.get(0).tasa == "16.00"
+      factura.impuestos.get(0).importe == "16.00"
+      factura.impuestos.get(0).tasa == "16"
       factura.impuestos.get(0).impuesto == "IVA"
   }
 
