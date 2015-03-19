@@ -43,7 +43,7 @@ class FacturaServicioImpl implements FacturaServicio {
 	}
 	
   @Override
-  public Factura generaFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
+  public Factura generaFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos) {
     if(!contribuyenteEmisor || !contribuyenteReceptor) {
       throw new RuntimeException("Contribuyente not found")
     }
@@ -80,7 +80,6 @@ class FacturaServicioImpl implements FacturaServicio {
       factura.conceptos << conceptoDeFacturacion
     }
 
-    def impuestos = [new Impuesto(tasa:16, impuesto:"IVA")]
     factura.subTotal = calculaSubtotal(factura)
     factura.impuestos = calculaImpuestos(factura.subTotal, impuestos)
     factura.total = calculaTotal(factura)
@@ -89,8 +88,8 @@ class FacturaServicioImpl implements FacturaServicio {
   }
 
   @Override
-  public File generaPdfDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
-    Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar)
+  public File generaPdfDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos) {
+    Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar, impuestos)
     def engine = new groovy.text.SimpleTemplateEngine()
     def file = new File(templatePdf)
     def text = file.text
@@ -112,8 +111,8 @@ class FacturaServicioImpl implements FacturaServicio {
   }
 
   @Override
-  public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar) {
-    Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar)
+  public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos) {
+    Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar, impuestos)
     def engine = new groovy.text.SimpleTemplateEngine()
     def file = new File(templateXml)
     def text = file.text

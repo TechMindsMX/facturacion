@@ -15,6 +15,7 @@ import com.tim.one.billing.model.Concepto
 import com.tim.one.billing.model.Contribuyente
 import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.DatosFiscales
+import com.tim.one.billing.model.Impuesto
 import com.tim.one.billing.services.FacturaServicio
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -68,8 +69,14 @@ class FacturaServicioIntegrationTest {
       unidad:"pieza",
       valorUnitario:100.00
     )
-
-    def file = facturaServicio.generaPdfDeFactura(datosDeFacturacion, emisor, receptor, conceptos)
+		def impuestos = []
+		impuestos << new Impuesto(
+			importe:16.00,
+			tasa:16,
+			impuesto:"IVA"
+		)
+		
+    def file = facturaServicio.generaPdfDeFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
 		
     assertTrue(file.isFile())
 		assertTrue(file.canRead())
@@ -118,8 +125,14 @@ class FacturaServicioIntegrationTest {
       unidad:"pieza",
       valorUnitario:100.00
     )
+		def impuestos = []
+		impuestos << new Impuesto(
+			importe:16.00,
+			tasa:16,
+			impuesto:"IVA"
+		)
 
-    def file = facturaServicio.generaXmlDeFactura(datosDeFacturacion, emisor, receptor, conceptos)
+    def file = facturaServicio.generaXmlDeFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
 
     assertTrue(file.isFile())
 		assertTrue(file.canRead())

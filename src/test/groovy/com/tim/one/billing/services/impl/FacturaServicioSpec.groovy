@@ -9,6 +9,7 @@ import com.tim.one.billing.model.Concepto
 import com.tim.one.billing.model.Contribuyente
 import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Factura
+import com.tim.one.billing.model.Impuesto
 import com.tim.one.billing.services.FacturaServicio
 
 @ContextConfiguration(locations=["classpath:/services-appctx.xml", "classpath:/properties-appctx.xml"])
@@ -42,8 +43,14 @@ class FacturaServicioSpec extends Specification {
       concepto.cantidad = 1
       def conceptos = []
       conceptos << concepto
+		and: "Unos impuestos a facturar"
+			Impuesto impuesto = new Impuesto()
+			impuesto.tasa =16
+			impuesto.impuesto = "IVA"
+			def impuestos = []
+			impuestos << impuesto
     when: "Solicitamos la factura"
-      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago
@@ -98,8 +105,14 @@ class FacturaServicioSpec extends Specification {
         unidad:"kilogramos",
         valorUnitario:100.00
       )
+		and: "Unos impuestos a facturar"
+			Impuesto impuesto = new Impuesto()
+			impuesto.tasa =16
+			impuesto.impuesto = "IVA"
+			def impuestos = []
+			impuestos << impuesto
     when: "Solicitamos la factura"
-      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago
@@ -143,8 +156,14 @@ class FacturaServicioSpec extends Specification {
         unidad:"pieza",
         valorUnitario:100.00
       )
+		and: "Unos impuestos a facturar"
+			Impuesto impuesto = new Impuesto()
+			impuesto.tasa =16
+			impuesto.impuesto = "IVA"
+			def impuestos = []
+			impuestos << impuesto
     when: "Solicitamos la factura"
-      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago == "Pago en una sola exhibicion"
