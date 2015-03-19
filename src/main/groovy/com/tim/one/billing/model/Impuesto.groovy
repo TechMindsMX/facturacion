@@ -1,7 +1,7 @@
 package com.tim.one.billing.model
 
 class Impuesto {
-  String importe
-  String tasa
+  BigDecimal importe = 0.0
+	BigDecimal tasa = 0.0
   String impuesto
 }

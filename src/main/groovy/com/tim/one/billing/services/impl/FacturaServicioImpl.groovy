@@ -80,7 +80,7 @@ class FacturaServicioImpl implements FacturaServicio {
       factura.conceptos << conceptoDeFacturacion
     }
 
-    def impuestos = [new Impuesto(tasa:"16", impuesto:"IVA")]
+    def impuestos = [new Impuesto(tasa:16, impuesto:"IVA")]
     factura.subTotal = calculaSubtotal(factura)
     factura.impuestos = calculaImpuestos(factura.subTotal, impuestos)
     factura.total = calculaTotal(factura)
@@ -156,7 +156,7 @@ class FacturaServicioImpl implements FacturaServicio {
       def impuestoTemp = new Impuesto()
       impuestoTemp.tasa = impuesto.tasa
       impuestoTemp.impuesto = impuesto.impuesto
-      impuestoTemp.importe = (subTotal * (impuesto.tasa.toBigDecimal()/100))
+      impuestoTemp.importe = (subTotal * (impuesto.tasa/100))
       impuestosTemp << impuestoTemp
     }
     impuestosTemp
