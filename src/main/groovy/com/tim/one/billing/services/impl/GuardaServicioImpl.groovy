@@ -28,7 +28,7 @@ class GuardaServicioImpl implements GuardaServicio {
 	
 	@PostConstruct
 	public void initialize(){
-		facturaPath = properties.getProperty(ApplicationState.FACTURA_HOME)
+		facturaPath = properties.getProperty(ApplicationState.FACTURA_FILES_HOME)
 	}
 	
 	@Override

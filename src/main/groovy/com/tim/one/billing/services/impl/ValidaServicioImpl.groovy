@@ -46,7 +46,7 @@ class ValidaServicioImpl implements ValidaServicio {
 	public void initialize(){
 		username = properties.getProperty(ApplicationState.FINKOK_USERNAME)
 		password = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
-		xmlPath = properties.getProperty(ApplicationState.FACTURA_HOME)
+		xmlPath = properties.getProperty(ApplicationState.FACTURA_FILES_HOME)
 	}
 
 	@Override
