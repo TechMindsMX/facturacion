@@ -70,8 +70,8 @@ class FacturacionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/cancel")
-	def CancelResponse cancelFactura(@RequestBody String json) {
-		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
+	def CancelResponse cancelFactura(FacturaCancelCommand command) {
+//		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
 		log.info("CANCELING factura")
 		log.info("command: " + command.dump())
 		return cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
