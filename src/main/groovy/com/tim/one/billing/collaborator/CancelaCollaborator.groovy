@@ -66,8 +66,12 @@ class CancelaCollaborator {
 			cer = OpensslCollaborator.leeArchivo(OpensslCollaborator.getRutaDestino() + "key.pem").getBytes("UTF-8")
 			key = OpensslCollaborator.leeArchivo(OpensslCollaborator.getRutaDestino() + "key.enc").getBytes("UTF-8")
 		} catch (UnsupportedEncodingException e) {
+		  log.error(e,e)
 		}
 
+		log.info("cer: " + cer)
+		log.info("key: " + key)
+		
 		OpensslCollaborator.deleteFiles()
 
 		CancelaCFDResult acuse = application.cancel(uuids, usernameFinkok, passwordFinkok, rfcContribuyente, cer, key, true)
