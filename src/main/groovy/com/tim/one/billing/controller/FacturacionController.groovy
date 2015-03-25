@@ -53,6 +53,12 @@ class FacturacionController {
 		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
+		
+		log.info("PRINTING conceptos")
+		command.conceptos.each {
+			log.info(it.dump())
+		}
+		
 		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos)
 
 		if(command.getTimbra()){
