@@ -56,10 +56,6 @@ class CancelaCollaborator {
     JAXBElement<StringArray> array = ob.createUUIDSUuids(sA);
     uuids.setUuids(array);
 
-		OpensslCollaborator.creaCerPem()
-		OpensslCollaborator.creaKeyPem()
-		OpensslCollaborator.creaKeyEncriptado()
-
 		byte[] cer = null
 		byte[] key = null
 		try {
@@ -68,11 +64,6 @@ class CancelaCollaborator {
 		} catch (UnsupportedEncodingException e) {
 		  log.error(e,e)
 		}
-
-		log.info("cer: " + cer)
-		log.info("key: " + key)
-		
-		OpensslCollaborator.deleteFiles()
 
 		CancelaCFDResult acuse = application.cancel(uuids, usernameFinkok, passwordFinkok, rfcContribuyente, cer, key, true)
 

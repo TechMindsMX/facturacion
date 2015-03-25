@@ -50,45 +50,6 @@ class OpensslCollaborator {
 		return rutaDestino
 	}
 
-	public static void creaCerPem() {
-		Runtime runtime = Runtime.getRuntime()
-		Process exec = null
-		try {
-			exec =
-					runtime.exec("openssl x509 -inform DER -outform PEM -in " + cer + " -pubkey -out " + rutaDestino
-					+ "cer.pem")
-			exec.waitFor()
-		} catch (IOException e) {
-		} catch (InterruptedException e) {
-		}
-	}
-
-	public static void creaKeyPem() {
-		Runtime runtime = Runtime.getRuntime()
-		Process exec = null
-		try {
-			exec =
-					runtime.exec("openssl pkcs8 -inform DER -in " + key + " -passin pass:" + claveCsd + " -out "
-					+ rutaDestino + "key.pem")
-			exec.waitFor()
-		} catch (IOException e) {
-		} catch (InterruptedException e) {
-		}
-	}
-
-	public static void creaKeyEncriptado() {
-		Runtime runtime = Runtime.getRuntime()
-		Process exec = null
-		try {
-			exec =
-					runtime.exec("openssl rsa -in " + rutaDestino + "key.pem -des3 -out " + rutaDestino
-					+ "key.enc -passout pass:" + claveFinkok)
-			exec.waitFor()
-		} catch (IOException e) {
-		} catch (InterruptedException e) {
-		}
-	}
-
 	public static String leeArchivo(String ruta) {
 		try {
 			FileInputStream fstream = new FileInputStream(ruta)
@@ -107,12 +68,4 @@ class OpensslCollaborator {
 		return null
 	}
 
-	public static void deleteFiles() {
-		File cerPem = new File(rutaDestino + "cer.pem")
-		cerPem.delete()
-		File keyPem = new File(rutaDestino + "key.pem")
-		keyPem.delete()
-		File keyEnc = new File(rutaDestino + "key.enc")
-		keyEnc.delete()
-	}
 }
