@@ -54,11 +54,6 @@ class FacturacionController {
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
 		
-		log.info("PRINTING conceptos")
-		command.conceptos.each {
-			log.info(it.dump())
-		}
-		
 		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos)
 
 		if(command.getTimbra()){
@@ -81,7 +76,7 @@ class FacturacionController {
 		log.info("CANCELING factura")
 		log.info("command: " + command.dump())
 		def result = cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
-		response.text = new Gson().toJson(result)
+		return new Gson().toJson(result)
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/validate")
