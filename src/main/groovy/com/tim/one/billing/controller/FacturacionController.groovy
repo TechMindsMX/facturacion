@@ -53,8 +53,8 @@ class FacturacionController {
 	Log log = LogFactory.getLog(getClass())
 	
 	@RequestMapping(method = RequestMethod.POST, value="/create")
-	def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command, HttpServletResponse response) {
-//		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
+	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
+		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
 		
@@ -77,8 +77,8 @@ class FacturacionController {
 	@RequestMapping(method = RequestMethod.POST, value="/cancel")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	def cancelFactura(FacturaCancelCommand command) {
-//		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
+	def cancelFactura(@RequestBody String json) {
+		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
 		log.info("CANCELING factura")
 		log.info("command: " + command.dump())
 		try{
