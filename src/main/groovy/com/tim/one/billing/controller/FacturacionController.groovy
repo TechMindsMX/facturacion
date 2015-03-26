@@ -8,9 +8,13 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.util.FileCopyUtils
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.ResponseStatus
 
 import com.google.gson.Gson
 import com.tim.one.billing.command.FacturaCancelCommand
@@ -49,8 +53,8 @@ class FacturacionController {
 	Log log = LogFactory.getLog(getClass())
 	
 	@RequestMapping(method = RequestMethod.POST, value="/create")
-	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
-		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
+	def createFacturaWithoutGeneratingFolio(FacturaCreateCommand command, HttpServletResponse response) {
+//		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
 		
@@ -71,12 +75,18 @@ class FacturacionController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/cancel")
-	def cancelFactura(@RequestBody String json) {
-		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
+	@ResponseStatus(HttpStatus.OK)
+	@ResponseBody
+	def cancelFactura(FacturaCancelCommand command) {
+//		FacturaCancelCommand command = new Gson().fromJson(json, FacturaCancelCommand.class)
 		log.info("CANCELING factura")
 		log.info("command: " + command.dump())
-		cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
-		null
+		try{
+			cancelaServicio.cancelaFactura(command.uuid, command.rfcContribuyente)
+			return new ResponseEntity<String>("OK", HttpStatus.OK);
+		} catch (RuntimeException re){
+			return new ResponseEntity<String>(re.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/validate")
