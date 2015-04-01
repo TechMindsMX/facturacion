@@ -44,7 +44,7 @@ class FacturaServicioImpl implements FacturaServicio {
 	}
 	
   @Override
-  public Factura generaFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos, List<Total> totales) {
+  public Factura generaFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos, Total totales) {
     if(!contribuyenteEmisor || !contribuyenteReceptor) {
       throw new RuntimeException("Contribuyente not found")
     }
@@ -81,16 +81,16 @@ class FacturaServicioImpl implements FacturaServicio {
       factura.conceptos << conceptoDeFacturacion
     }
 
-    factura.subTotal = calculaSubtotal(factura)
-    factura.impuestos = calculaImpuestos(factura.subTotal, impuestos)
-    factura.total = calculaTotal(factura)
+    factura.subTotal = totales.subtotal
+    factura.impuestos = impuestos
+    factura.total = totales.total
 
     factura
   }
 
   @Override
-  public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos, List<Total> totales) {
-    Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar, impuestos)
+  public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos, Total totales) {
+    Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar, impuestos, totales)
     def engine = new groovy.text.SimpleTemplateEngine()
     def file = new File(templateXml)
     def text = file.text
@@ -121,29 +121,6 @@ class FacturaServicioImpl implements FacturaServicio {
     </note>
     """
     file
-  }
-
-  private def calculaSubtotal(factura) {
-    factura.conceptos.sum(0) { it.valorUnitario * it.cantidad }
-  }
-
-  private def calculaImpuestos(subTotal, impuestos) {
-    def impuestosTemp = []
-    impuestos.each { impuesto ->
-      def impuestoTemp = new Impuesto()
-      impuestoTemp.tasa = impuesto.tasa
-      impuestoTemp.impuesto = impuesto.impuesto
-      impuestoTemp.importe = (subTotal * (impuesto.tasa/100))
-      impuestosTemp << impuestoTemp
-    }
-    impuestosTemp
-  }
-
-  private def calculaTotal(factura) {
-    def subTotal = calculaSubtotal(factura)
-    def totalImpuestos = factura.impuestos.sum(0) { it.importe.toBigDecimal() }
-    def total = subTotal + totalImpuestos
-    total
   }
 
 }

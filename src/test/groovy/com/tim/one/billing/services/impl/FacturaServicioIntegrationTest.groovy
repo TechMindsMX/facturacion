@@ -16,6 +16,7 @@ import com.tim.one.billing.model.Contribuyente
 import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.DatosFiscales
 import com.tim.one.billing.model.Impuesto
+import com.tim.one.billing.model.Total
 import com.tim.one.billing.services.FacturaServicio
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -75,8 +76,12 @@ class FacturaServicioIntegrationTest {
 			tasa:16,
 			impuesto:"IVA"
 		)
+		def totales = new Total(
+			total:16.00,
+			subtotal:16.00
+		)
 
-    def file = facturaServicio.generaXmlDeFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
+    def file = facturaServicio.generaXmlDeFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos, totales)
 
     assertTrue(file.isFile())
 		assertTrue(file.canRead())
