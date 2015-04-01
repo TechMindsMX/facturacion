@@ -58,7 +58,7 @@ class FacturacionController {
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
 		
-		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos)
+		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos, command.totales)
 
 		if(command.getTimbra()){
 			def acuse = timbraServicio.timbra(file)

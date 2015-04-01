@@ -1,6 +1,6 @@
 package com.tim.one.billing.model
 
-class Totales {
+class Total {
   BigDecimal total
 	BigDecimal subtotal
 	BigDecimal totalImpuestosTrasladados

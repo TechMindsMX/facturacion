@@ -13,6 +13,7 @@ import com.tim.one.billing.model.Contribuyente
 import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Factura
 import com.tim.one.billing.model.Impuesto
+import com.tim.one.billing.model.Total
 import com.tim.one.billing.services.FacturaServicio
 import com.tim.one.billing.state.ApplicationState
 
@@ -43,7 +44,7 @@ class FacturaServicioImpl implements FacturaServicio {
 	}
 	
   @Override
-  public Factura generaFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos) {
+  public Factura generaFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos, List<Total> totales) {
     if(!contribuyenteEmisor || !contribuyenteReceptor) {
       throw new RuntimeException("Contribuyente not found")
     }
@@ -88,30 +89,7 @@ class FacturaServicioImpl implements FacturaServicio {
   }
 
   @Override
-  public File generaPdfDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos) {
-    Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar, impuestos)
-    def engine = new groovy.text.SimpleTemplateEngine()
-    def file = new File(templatePdf)
-    def text = file.text
-
-    def xhtmlWriter = new StringWriter()
-    def bindings = factura.properties + [logo:templateLogo]
-    engine.createTemplate(text).make(bindings).writeTo(xhtmlWriter)
-    def xhtml = xhtmlWriter.toString()
-    xhtmlWriter.close()
-
-    ITextRenderer renderer = new ITextRenderer()
-    renderer.setDocumentFromString(xhtml)
-    renderer.layout()
-
-    def temporalFile= File.createTempFile(System.currentTimeMillis().toString(), ".pdf")
-    OutputStream os = new FileOutputStream(temporalFile)
-    renderer.createPDF(os)
-    temporalFile
-  }
-
-  @Override
-  public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos) {
+  public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos, List<Total> totales) {
     Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar, impuestos)
     def engine = new groovy.text.SimpleTemplateEngine()
     def file = new File(templateXml)
