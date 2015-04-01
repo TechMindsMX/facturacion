@@ -4,6 +4,7 @@ import com.tim.one.billing.model.Concepto
 import com.tim.one.billing.model.Contribuyente
 import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Impuesto
+import com.tim.one.billing.model.Totales
 
 
 class FacturaCreateCommand {
@@ -13,5 +14,6 @@ class FacturaCreateCommand {
 
   List<Concepto> conceptos
   List<Impuesto> impuestos
+	List<Totales> totales
   Boolean timbra = true
 }
