@@ -83,7 +83,7 @@ class FacturaServicioImpl implements FacturaServicio {
 
     factura.impuestos = impuestos
     factura.subTotal = totales.subtotal
-		factura.subTotal = totales.totalImpuestosTrasladados
+		factura.totalImpuestosTrasladados = totales.totalImpuestosTrasladados
     factura.total = totales.total
 
     factura
