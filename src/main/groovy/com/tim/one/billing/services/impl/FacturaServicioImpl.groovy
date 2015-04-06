@@ -81,8 +81,9 @@ class FacturaServicioImpl implements FacturaServicio {
       factura.conceptos << conceptoDeFacturacion
     }
 
-    factura.subTotal = totales.subtotal
     factura.impuestos = impuestos
+    factura.subTotal = totales.subtotal
+		factura.subTotal = totales.totalImpuestosTrasladados
     factura.total = totales.total
 
     factura
