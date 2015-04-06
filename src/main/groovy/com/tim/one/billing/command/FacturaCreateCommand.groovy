@@ -14,6 +14,6 @@ class FacturaCreateCommand {
 
   List<Concepto> conceptos
   List<Impuesto> impuestos
-	List<Total> totales
+  Total totales
   Boolean timbra = true
 }
