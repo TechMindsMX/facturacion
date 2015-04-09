@@ -10,6 +10,7 @@ import com.tim.one.billing.model.Contribuyente
 import com.tim.one.billing.model.DatosDeFacturacion
 import com.tim.one.billing.model.Factura
 import com.tim.one.billing.model.Impuesto
+import com.tim.one.billing.model.Total
 import com.tim.one.billing.services.FacturaServicio
 
 @ContextConfiguration(locations=["classpath:/services-appctx.xml", "classpath:/properties-appctx.xml"])
@@ -45,12 +46,18 @@ class FacturaServicioSpec extends Specification {
       conceptos << concepto
 		and: "Unos impuestos a facturar"
 			Impuesto impuesto = new Impuesto()
-			impuesto.tasa =16
+			impuesto.tasa = 16
+			impuesto.importe = 16.00
 			impuesto.impuesto = "IVA"
 			def impuestos = []
 			impuestos << impuesto
+		and: "Totales"
+		  def totales = new Total(
+			  total:16.00,
+			  subtotal:16.00
+		  )
     when: "Solicitamos la factura"
-      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos, totales)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago
@@ -61,15 +68,15 @@ class FacturaServicioSpec extends Specification {
       factura.datosDeFacturacion.numeroDeCuentaDePago
       factura.datosDeFacturacion.moneda
       factura.datosDeFacturacion.tipoDeCambio
-      factura.subTotal == 100.00
-      factura.total == 116.00
+      factura.subTotal == 16.00
+      factura.total == 16.00
       factura.emisor == emisor
       factura.receptor == receptor
       factura.conceptos.get(0).descripcion == "Servicio de cafe"
       factura.conceptos.get(0).valorUnitario == 100.00
       factura.conceptos.get(0).unidad == "NO APLICA"
       factura.conceptos.get(0).cantidad == 1
-      factura.impuestos.get(0).importe == 16.0000
+      factura.impuestos.get(0).importe == 16.00
       factura.impuestos.get(0).tasa == 16
       factura.impuestos.get(0).impuesto == "IVA"
   }
@@ -111,8 +118,13 @@ class FacturaServicioSpec extends Specification {
 			impuesto.impuesto = "IVA"
 			def impuestos = []
 			impuestos << impuesto
+	  and: "Totales"
+			def totales = new Total(
+				total:16.00,
+				subtotal:16.00
+			)
     when: "Solicitamos la factura"
-      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos, totales)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago
@@ -123,8 +135,8 @@ class FacturaServicioSpec extends Specification {
       factura.datosDeFacturacion.numeroDeCuentaDePago
       factura.datosDeFacturacion.moneda
       factura.datosDeFacturacion.tipoDeCambio
-      factura.subTotal == 200.00
-      factura.total == 232.00
+      factura.subTotal == 16.00
+      factura.total == 16.00
       factura.emisor
       factura.receptor
       factura.conceptos.size() == 2
@@ -162,8 +174,13 @@ class FacturaServicioSpec extends Specification {
 			impuesto.impuesto = "IVA"
 			def impuestos = []
 			impuestos << impuesto
+	  and: "Totales"
+			def totales = new Total(
+				total:16.00,
+				subtotal:16.00
+			)
     when: "Solicitamos la factura"
-      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos)
+      Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos, totales)
     then: "Verificamos la estructura de la factura"
       factura.datosDeFacturacion.uuid
       factura.datosDeFacturacion.formaDePago == "Pago en una sola exhibicion"
@@ -174,8 +191,8 @@ class FacturaServicioSpec extends Specification {
       factura.datosDeFacturacion.numeroDeCuentaDePago == receptor.getCuenta()
       factura.datosDeFacturacion.moneda == "MXN"
       factura.datosDeFacturacion.tipoDeCambio == "1.00"
-      factura.subTotal == 100.00
-      factura.total == 116.00
+      factura.subTotal == 16.00
+      factura.total == 16.00
       factura.emisor
       factura.receptor
       factura.conceptos.size() == 1
