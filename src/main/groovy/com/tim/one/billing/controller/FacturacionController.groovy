@@ -57,8 +57,6 @@ class FacturacionController {
 		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
-		log.info("totales: " + command.totales.dump())
-		log.info("emisor: " + command.emisor.dump())
 		
 		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos, command.totales)
 
@@ -96,9 +94,14 @@ class FacturacionController {
 		FacturaValidCommand command = new Gson().fromJson(json, FacturaValidCommand.class)
 		log.info("VALIDATING factura")
 		log.info("command: " + command.dump())
-		def response = validaServicio.valida(command.xmlName)
-		log.info("response: " + response)
-		return response
+		
+		try{
+		  def response = validaServicio.valida(command.xmlName)
+		  log.info("response: " + response)
+			return new ResponseEntity<String>(response, HttpStatus.OK);
+		} catch (RuntimeException re){
+			return new ResponseEntity<String>(re.getMessage(), HttpStatus.BAD_REQUEST);
+	  }
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
