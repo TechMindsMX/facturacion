@@ -37,6 +37,7 @@ import com.tim.one.billing.services.ValidaServicio
  */
 
 @Controller
+@RequestMapping("/services/*")
 class FacturacionController {
 
 	@Autowired
