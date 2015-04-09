@@ -56,7 +56,7 @@ dependencies {
 }
 
 def filesToInclude = ["facturacion-${currentEnvironment}.properties"]
-def toDirectory = 'src/main/resources'
+def toDirectory = 'src/main/resources/config'
 task settingMainEnvironment(type:Copy){
 	from facturacionConfigurationDir
 	into toDirectory
@@ -74,7 +74,7 @@ task settingTestEnvironment(type:Copy){
 
 task settingLog4jProperties(type:Copy){
 	from "${System.getProperty('user.home')}/.factura/log4j-${currentEnvironment}.properties"
-	into "src/main/resources/"
+	into "src/main/resources/config"
 	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
 }
 
