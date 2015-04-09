@@ -1,5 +1,6 @@
 ext {
 	springVersion = "4.0.3.RELEASE"
+	mysqlConnectorJavaVersion = "5.1.6"
 	facturacionConfigurationDir = "${System.getProperty('user.home')}/.factura/"
 	currentEnvironment = project.hasProperty("environment") ? environment : "development"
 }
@@ -42,9 +43,12 @@ dependencies {
 	compile 'org.codehaus.groovy:groovy-all:2.3.6'
 	compile 'commons-io:commons-io:1.4'
 	compile "org.springframework:spring-webmvc:$springVersion"
+	compile "org.springframework:spring-tx:$springVersion"
+	compile "org.springframework:spring-orm:$springVersion"
 	compile "com.google.code.gson:gson:2.2.2"
 	compile "org.apache.commons:commons-lang3:3.0.1"
 	compile 'org.springframework.security.oauth:spring-security-oauth2:2.0.5.RELEASE'
+	compile "mysql:mysql-connector-java:$mysqlConnectorJavaVersion"
 	testCompile "junit:junit:4.12"
 	testCompile "org.mockito:mockito-all:1.10.19"
 	testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
