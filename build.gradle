@@ -78,4 +78,10 @@ task settingLog4jProperties(type:Copy){
 	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
 }
 
-processResources.dependsOn "settingMainEnvironment", "settingTestEnvironment", "settingLog4jProperties"
+task settingOauth2Properties(type:Copy){
+	from "${System.getProperty('user.home')}/.factura/oauth2-${currentEnvironment}.properties"
+	into "src/main/resources/config"
+	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
+}
+
+processResources.dependsOn "settingMainEnvironment", "settingTestEnvironment", "settingLog4jProperties", "settingOauth2Properties"
