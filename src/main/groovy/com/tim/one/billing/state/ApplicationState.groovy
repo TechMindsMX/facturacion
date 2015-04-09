@@ -15,4 +15,13 @@ interface ApplicationState {
 	static final String KEY_PASSWORD = "key.password"
 	static final String FILE_SEPARATOR = System.getProperty("file.separator")
 	
+	/**
+	 * Oauth2
+	 */
+	
+	static final String INTEGRA_USERNAME = "integra.username";
+	static final String INTEGRA_PASSWORD = "integra.password";
+	static final String KPMG_USERNAME = "kpmg.username";
+	static final String KPMG_PASSWORD = "kpmg.password";
+	
 }
