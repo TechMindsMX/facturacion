@@ -3,7 +3,7 @@ package com.tim.one.billing.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cancel.CancelaCFDResult;
+import views.core.soap.services.apps.CancelaCFDResult;
 
 import com.tim.one.billing.collaborator.CancelaCollaborator;
 import com.tim.one.billing.exception.FacturaException;

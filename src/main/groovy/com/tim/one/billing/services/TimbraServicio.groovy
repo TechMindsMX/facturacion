@@ -1,6 +1,6 @@
 package com.tim.one.billing.services
 
-import stamp.AcuseRecepcionCFDI
+import views.core.soap.services.apps.AcuseRecepcionCFDI
 
 interface TimbraServicio {
 	

@@ -6,7 +6,7 @@ import org.apache.commons.io.FileUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-import stamp.AcuseRecepcionCFDI
+import views.core.soap.services.apps.AcuseRecepcionCFDI
 
 import com.tim.one.billing.services.GuardaServicio
 import com.tim.one.billing.state.ApplicationState

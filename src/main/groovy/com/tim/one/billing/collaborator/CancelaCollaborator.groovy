@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service
 
-import cancel.Application
-import cancel.CancelSOAP
-import cancel.CancelaCFDResult
-import cancel.Folio
-import cancel.FolioArray
-import cancel.ObjectFactory
-import cancel.StringArray
-import cancel.UUIDS
+import com.finkok.facturacion.cancel.Application
+import com.finkok.facturacion.cancel.CancelSOAP
+import views.core.soap.services.apps.CancelaCFDResult
+import views.core.soap.services.apps.Folio
+import views.core.soap.services.apps.FolioArray
+import views.core.soap.services.apps.ObjectFactory
+import com.finkok.facturacion.cancellation.StringArray
+import views.core.soap.services.apps.UUIDS
 
 import com.tim.one.billing.state.ApplicationState
 
@@ -49,11 +49,11 @@ class CancelaCollaborator {
 	CancelaCFDResult cancela(String uuid, String rfcContribuyente){
 		ObjectFactory ob = new ObjectFactory()
 		
-		UUIDS uuids = ob.createUUIDS();
-    StringArray sA = ob.createStringArray();
+		UUIDS uuids = new UUIDS()
+    StringArray sA = new StringArray();
     sA.getString().add(uuid);
 
-    JAXBElement<StringArray> array = ob.createUUIDSUuids(sA);
+    JAXBElement<StringArray> array = new JAXBElement<StringArray>();
     uuids.setUuids(array);
 
 		byte[] cer = null

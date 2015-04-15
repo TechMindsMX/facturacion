@@ -7,11 +7,11 @@ import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
-import stamp.AcuseRecepcionCFDI
-import stamp.Application
-import stamp.Incidencia
-import stamp.IncidenciaArray
-import stamp.StampSOAP
+import views.core.soap.services.apps.AcuseRecepcionCFDI
+import com.finkok.facturacion.stamp.Application
+import views.core.soap.services.apps.Incidencia
+import views.core.soap.services.apps.IncidenciaArray
+import com.finkok.facturacion.stamp.StampSOAP
 
 import com.tim.one.billing.services.CfdiServicio
 import com.tim.one.billing.services.TimbraServicio

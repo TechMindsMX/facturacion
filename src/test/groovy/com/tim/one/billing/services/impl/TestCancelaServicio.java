@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import cancel.CancelaCFDResult;
+import views.core.soap.services.apps.CancelaCFDResult;
 
 import com.tim.one.billing.collaborator.CancelaCollaborator;
 
