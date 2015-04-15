@@ -53,7 +53,7 @@ dependencies {
 	compile 'com.lowagie:itext:2.1.0'
 	compile files('libs/finkok-stamp-demo.jar')
 	compile files('libs/finkok-cancel-demo.jar')
-	compile files('libs/finkok-validacion.jar')
+	compile files('libs/finkok-valida-demo.jar')
 }
 
 def filesToInclude = ["facturacion-${currentEnvironment}.properties"]

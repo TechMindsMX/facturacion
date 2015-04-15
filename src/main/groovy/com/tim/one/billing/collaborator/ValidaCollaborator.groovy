@@ -4,17 +4,17 @@ import javax.annotation.PostConstruct
 
 import javax.xml.bind.JAXBElement
 
-import modelswsdl.validacion.AcuseValidacion
-import modelswsdl.validacion.Observacion
-import modelswsdl.validacion.ObservacionArray
-import mx.cepdi.servicios.validacion.Application
-import mx.cepdi.servicios.validacion.ValidacionService
 import org.apache.commons.logging.Log
 import org.apache.commons.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import com.tim.one.billing.state.ApplicationState
+import finkok.valida.demo.AcuseValidacion
+import finkok.valida.demo.Application
+import finkok.valida.demo.Observacion
+import finkok.valida.demo.ObservacionArray
+import finkok.valida.demo.ValidacionService
 
 /**
  * @author VictorManuel finkok
