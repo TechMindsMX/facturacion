@@ -1,6 +1,7 @@
 package com.tim.one.billing.services.impl;
 
 import static org.mockito.Mockito.when;
+import finkok.cancel.demo.CancelaCFDResult;
 import groovy.lang.GroovyRuntimeException;
 
 import javax.xml.bind.JAXBElement;
@@ -10,8 +11,6 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import cancel.CancelaCFDResult;
 
 import com.tim.one.billing.collaborator.CancelaCollaborator;
 

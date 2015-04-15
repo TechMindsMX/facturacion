@@ -3,11 +3,11 @@ package com.tim.one.billing.services.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cancel.CancelaCFDResult;
-
 import com.tim.one.billing.collaborator.CancelaCollaborator;
 import com.tim.one.billing.exception.FacturaException;
 import com.tim.one.billing.services.CancelaServicio;
+
+import finkok.cancel.demo.CancelaCFDResult;
 
 /**
  * @author josdem
