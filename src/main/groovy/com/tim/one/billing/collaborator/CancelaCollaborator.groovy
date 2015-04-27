@@ -9,16 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service
 
-import cancel.Application
-import cancel.CancelSOAP
-import cancel.CancelaCFDResult
-import cancel.Folio
-import cancel.FolioArray
-import cancel.ObjectFactory
-import cancel.StringArray
-import cancel.UUIDS
-
 import com.tim.one.billing.state.ApplicationState
+
+import finkok.cancel.demo.Application
+import finkok.cancel.demo.CancelSOAP
+import finkok.cancel.demo.CancelaCFDResult
+import finkok.cancel.demo.Folio
+import finkok.cancel.demo.FolioArray
+import finkok.cancel.demo.ObjectFactory
+import finkok.cancel.demo.StringArray
+import finkok.cancel.demo.UUIDS
 
 /**
  * @author josdem
