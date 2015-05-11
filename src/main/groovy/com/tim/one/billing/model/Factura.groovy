@@ -4,7 +4,7 @@ class Factura {
 
   DatosDeFacturacion datosDeFacturacion
 
-  String folio = UUID.randomUUID().toString().split('-').join('').substring(0,6)
+  String folio
   BigDecimal subTotal = 0.0
   BigDecimal total = 0.0
 	BigDecimal totalImpuestosTrasladados = 0.0
