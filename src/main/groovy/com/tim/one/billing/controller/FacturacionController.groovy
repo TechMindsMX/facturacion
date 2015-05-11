@@ -58,6 +58,7 @@ class FacturacionController {
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
 		
+		command.emisor.datosFiscales.ciudad = "Ciudad de México"
 		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos, command.totales)
 
 		if(command.getTimbra()){
