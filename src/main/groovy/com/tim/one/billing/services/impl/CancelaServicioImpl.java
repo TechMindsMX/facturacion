@@ -7,7 +7,7 @@ import com.tim.one.billing.collaborator.CancelaCollaborator;
 import com.tim.one.billing.exception.FacturaException;
 import com.tim.one.billing.services.CancelaServicio;
 
-import finkok.cancel.prod.CancelaCFDResult;
+import finkok.cancel.demo.CancelaCFDResult;
 
 /**
  * @author josdem

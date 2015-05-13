@@ -88,7 +88,7 @@ public class OpenSSL {
    }
    
    public static void main(String[] args) {
-		OpenSSL openSSL = new OpenSSL();
+		new OpenSSL();
 	}
 
 }
