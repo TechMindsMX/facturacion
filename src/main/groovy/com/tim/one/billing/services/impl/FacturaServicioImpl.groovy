@@ -92,20 +92,12 @@ class FacturaServicioImpl implements FacturaServicio {
 
   @Override
   public File generaXmlDeFactura(DatosDeFacturacion datosDeFacturacion, Contribuyente contribuyenteEmisor, Contribuyente contribuyenteReceptor, List<Concepto> conceptosAFacturar, List<Impuesto> impuestos, Total totales) {
-		log.info("1")
     Factura factura = generaFactura(datosDeFacturacion, contribuyenteEmisor, contribuyenteReceptor, conceptosAFacturar, impuestos, totales)
-		log.info("2")
     def engine = new groovy.text.SimpleTemplateEngine()
-		log.info("3")
     def file = new File(templateXml)
-		log.info("toFile: " + file.getAbsolutePath());
-		log.info("4")
     def text = file.text
-		log.info("5")
     def result = engine.createTemplate(text).make(factura.properties)
-		log.info("6")
     def temporalXmlFile= File.createTempFile(System.currentTimeMillis().toString(),".xml")
-		log.info("7")
     temporalXmlFile.text = result
 		log.info("facturaXml: " + temporalXmlFile)
     temporalXmlFile
