@@ -10,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 import com.tim.one.billing.state.ApplicationState
-import finkok.valida.demo.AcuseValidacion
-import finkok.valida.demo.Application
-import finkok.valida.demo.Observacion
-import finkok.valida.demo.ObservacionArray
-import finkok.valida.demo.ValidacionService
+import finkok.valida.prod.AcuseValidacion
+import finkok.valida.prod.Application
+import finkok.valida.prod.Observacion
+import finkok.valida.prod.ObservacionArray
+import finkok.valida.prod.ValidacionService
 
 /**
  * @author VictorManuel finkok
