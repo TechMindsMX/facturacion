@@ -82,10 +82,12 @@ class CancelaCollaborator {
 			for (Folio f : folioArray.getFolio()) {
 				if (f.getUUID() != null) {
 					log.info("UUID: " + f.getUUID().getValue())
-					result.success = true
 				}
 				if (f.getEstatusUUID() != null) {
 					log.info("Estatus UUID: " + f.getEstatusUUID().getValue())
+					if(f.getEstatusUUID().getValue().trim().equals("201")){
+						result.success = true
+					}
 					result.message = "Estatus UUID: " + f.getEstatusUUID().getValue()
 				}
 			}
