@@ -11,7 +11,7 @@ public class OpenSSL {
 	
 	 private static String claveCsd = "INTE2014";
    private static String key = "CSD_INTEGRADORA_DE_EMPRENDIMIENTOS_CULTURALES_SA_DE_CV_IEC121203FV8_20140123_101513.key";
-   private static String cer = "integradora.cer";
+   private static String cer = "iec121203fv8.cer";
    private static String rutaDestino = "/home/josdem/Desktop/";
    private static String claveFinkok = "1Nt3#r4dor,";
 
@@ -88,7 +88,7 @@ public class OpenSSL {
    }
    
    public static void main(String[] args) {
-		new OpenSSL();
+		new OpenSSL().creaKeyEncriptado();
 	}
 
 }

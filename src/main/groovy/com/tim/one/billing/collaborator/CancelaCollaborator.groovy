@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service
 
+import com.tim.one.billing.bean.Acuse
 import com.tim.one.billing.state.ApplicationState
 
 import finkok.cancel.prod.Application
@@ -46,7 +47,7 @@ class CancelaCollaborator {
 		passwordFinkok = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
 	}
 
-	CancelaCFDResult cancela(String uuid, String rfcContribuyente){
+	Acuse cancela(String uuid, String rfcContribuyente){
 		ObjectFactory ob = new ObjectFactory()
 		
 		UUIDS uuids = ob.createUUIDS();
@@ -66,25 +67,30 @@ class CancelaCollaborator {
 		}
 
 		CancelaCFDResult acuse = application.cancel(uuids, usernameFinkok, passwordFinkok, rfcContribuyente, cer, key, true)
+		Acuse result = new Acuse()
+		result.success = false
 
 		if (acuse.getAcuse() != null) {
 			log.info(acuse.getAcuse().getValue())
 		}
 		if (acuse.getCodEstatus() != null) {
 			log.info("Codigo Estatus: " + acuse.getCodEstatus().getValue())
+			result.message = "Codigo Estatus: " + acuse.getCodEstatus().getValue()
 		}
 		if (acuse.getFolios() != null) {
 			FolioArray folioArray = acuse.getFolios().getValue()
 			for (Folio f : folioArray.getFolio()) {
 				if (f.getUUID() != null) {
 					log.info("UUID: " + f.getUUID().getValue())
+					result.success = true
 				}
 				if (f.getEstatusUUID() != null) {
 					log.info("Estatus UUID: " + f.getEstatusUUID().getValue())
+					result.message = "Estatus UUID: " + f.getEstatusUUID().getValue()
 				}
 			}
 		}
 		
-		return acuse
+		return result
 	}
 }
