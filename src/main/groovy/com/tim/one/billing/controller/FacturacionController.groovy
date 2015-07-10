@@ -71,6 +71,7 @@ class FacturacionController {
 		
 		def fis = new FileInputStream(file)
 		response.setContentType("application/xml")
+		response.setCharacterEncoding("UTF-8");
 		response.setContentLength(((int) file.size()))
 		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
 
