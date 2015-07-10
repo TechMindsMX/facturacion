@@ -57,6 +57,7 @@ class FacturacionController {
 	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
 		request.setCharacterEncoding("UTF-8");
 		log.info("json: " + json);
+		log.info("encoding: México");
 		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
