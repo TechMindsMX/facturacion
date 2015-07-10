@@ -54,6 +54,7 @@ class FacturacionController {
 	
 	@RequestMapping(method = RequestMethod.POST, value="/create")
 	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
+		log.info("json: " + json);
 		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
