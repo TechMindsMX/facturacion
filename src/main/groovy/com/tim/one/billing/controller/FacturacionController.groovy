@@ -1,5 +1,6 @@
 package com.tim.one.billing.controller
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse
 
 import org.apache.commons.io.FileUtils
@@ -53,7 +54,8 @@ class FacturacionController {
 	Log log = LogFactory.getLog(getClass())
 	
 	@RequestMapping(method = RequestMethod.POST, value="/create")
-	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
+	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+		request.setCharacterEncoding("UTF-8");
 		log.info("json: " + json);
 		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
