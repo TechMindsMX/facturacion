@@ -58,6 +58,7 @@ class FacturacionController {
 		request.setCharacterEncoding("UTF-8");
 		log.info("json: " + json);
 		log.info("encoding: México");
+		println 'País: México'
 		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("GENERATING factura")
 		log.info("command: " + command.dump())
