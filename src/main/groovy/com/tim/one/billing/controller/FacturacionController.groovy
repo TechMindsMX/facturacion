@@ -54,13 +54,10 @@ class FacturacionController {
 	Log log = LogFactory.getLog(getClass())
 	
 	@RequestMapping(method = RequestMethod.POST, value="/create")
-	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
-		request.setCharacterEncoding("UTF-8");
-		log.info("json: " + json);
-		log.info("encoding: México");
-		println 'País: México'
-		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
+	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
 		log.info("GENERATING factura")
+		log.info("json: " + json);
+		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
 		log.info("command: " + command.dump())
 		
 		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos, command.totales)
