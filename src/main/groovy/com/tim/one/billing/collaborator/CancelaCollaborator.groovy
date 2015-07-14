@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service
 import com.tim.one.billing.bean.Acuse
 import com.tim.one.billing.state.ApplicationState
 
-import finkok.cancel.demo.Application
-import finkok.cancel.demo.CancelSOAP
-import finkok.cancel.demo.CancelaCFDResult
-import finkok.cancel.demo.Folio
-import finkok.cancel.demo.FolioArray
-import finkok.cancel.demo.ObjectFactory
-import finkok.cancel.demo.StringArray
-import finkok.cancel.demo.UUIDS
+import finkok.cancel.prod.Application
+import finkok.cancel.prod.CancelSOAP
+import finkok.cancel.prod.CancelaCFDResult
+import finkok.cancel.prod.Folio
+import finkok.cancel.prod.FolioArray
+import finkok.cancel.prod.ObjectFactory
+import finkok.cancel.prod.StringArray
+import finkok.cancel.prod.UUIDS
 
 /**
  * @author josdem
