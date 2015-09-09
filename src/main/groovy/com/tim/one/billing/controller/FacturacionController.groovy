@@ -78,7 +78,7 @@ class FacturacionController {
 			
 			FileCopyUtils.copy(fis, response.getOutputStream())
 		}catch (JsonSyntaxException jse){
-    	log.warn (jse, jse)
+    	log.warn(jse.getMessage())
       return new ResponseEntity<String>(jse.getMessage(), HttpStatus.BAD_REQUEST)
     }
 		null
