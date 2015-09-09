@@ -1,5 +1,6 @@
 ext {
 	springVersion = "4.0.3.RELEASE"
+	groovyVersion = "2.3.10"
 	facturacionConfigurationDir = "${System.getProperty('user.home')}/.factura/"
 	currentEnvironment = project.hasProperty("environment") ? environment : "development"
 }
@@ -39,7 +40,7 @@ dependencies {
 	providedCompile "javax.servlet:servlet-api:2.5"
 	compile "log4j:log4j:1.2.17"
 	compile 'org.apache.servicemix.bundles:org.apache.servicemix.bundles.not-yet-commons-ssl:0.3.11_1'
-	compile 'org.codehaus.groovy:groovy-all:2.3.6'
+	compile "org.codehaus.groovy:groovy-all:$groovyVersion"
 	compile 'commons-io:commons-io:1.4'
 	compile "org.springframework:spring-webmvc:$springVersion"
 	compile "com.google.code.gson:gson:2.2.2"

@@ -50,6 +50,7 @@ class TimbraServicioImpl implements TimbraServicio {
 	AcuseRecepcionCFDI timbra(File file) {
 		File fileSellado = cfdiServicio.sella(file)
 		byte[] factura = fileSellado.getBytes()
+		log.info "username: ${username}, password: ${password}"
 		def acuse = application.stamp(factura, username, password)
 
 		if (acuse.getXml() != null) {
