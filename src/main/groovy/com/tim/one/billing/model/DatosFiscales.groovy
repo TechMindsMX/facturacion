@@ -6,7 +6,7 @@ class DatosFiscales {
   String rfc
   String pais
   String calle
-  String ciudad
+  String ciudad 
   String colonia
   String delegacion
   String codigoPostal

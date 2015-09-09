@@ -9,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service
 
+import com.tim.one.billing.bean.Acuse
 import com.tim.one.billing.state.ApplicationState
 
-import finkok.cancel.demo.Application
-import finkok.cancel.demo.CancelSOAP
-import finkok.cancel.demo.CancelaCFDResult
-import finkok.cancel.demo.Folio
-import finkok.cancel.demo.FolioArray
-import finkok.cancel.demo.ObjectFactory
-import finkok.cancel.demo.StringArray
-import finkok.cancel.demo.UUIDS
+import finkok.cancel.prod.Application
+import finkok.cancel.prod.CancelSOAP
+import finkok.cancel.prod.CancelaCFDResult
+import finkok.cancel.prod.Folio
+import finkok.cancel.prod.FolioArray
+import finkok.cancel.prod.ObjectFactory
+import finkok.cancel.prod.StringArray
+import finkok.cancel.prod.UUIDS
 
 /**
  * @author josdem
@@ -46,7 +47,7 @@ class CancelaCollaborator {
 		passwordFinkok = properties.getProperty(ApplicationState.FINKOK_PASSWORD)
 	}
 
-	CancelaCFDResult cancela(String uuid, String rfcContribuyente){
+	Acuse cancela(String uuid, String rfcContribuyente){
 		ObjectFactory ob = new ObjectFactory()
 		
 		UUIDS uuids = ob.createUUIDS();
@@ -66,12 +67,15 @@ class CancelaCollaborator {
 		}
 
 		CancelaCFDResult acuse = application.cancel(uuids, usernameFinkok, passwordFinkok, rfcContribuyente, cer, key, true)
+		Acuse result = new Acuse()
+		result.success = false
 
 		if (acuse.getAcuse() != null) {
 			log.info(acuse.getAcuse().getValue())
 		}
 		if (acuse.getCodEstatus() != null) {
 			log.info("Codigo Estatus: " + acuse.getCodEstatus().getValue())
+			result.message = "Codigo Estatus: " + acuse.getCodEstatus().getValue()
 		}
 		if (acuse.getFolios() != null) {
 			FolioArray folioArray = acuse.getFolios().getValue()
@@ -81,10 +85,14 @@ class CancelaCollaborator {
 				}
 				if (f.getEstatusUUID() != null) {
 					log.info("Estatus UUID: " + f.getEstatusUUID().getValue())
+					if(f.getEstatusUUID().getValue().trim().equals("201")){
+						result.success = true
+					}
+					result.message = "Estatus UUID: " + f.getEstatusUUID().getValue()
 				}
 			}
 		}
 		
-		return acuse
+		return result
 	}
 }

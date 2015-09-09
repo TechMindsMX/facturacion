@@ -1,6 +1,6 @@
 package com.tim.one.billing.services
 
-import finkok.stamp.demo.AcuseRecepcionCFDI
+import finkok.stamp.prod.AcuseRecepcionCFDI
 
 interface TimbraServicio {
 	

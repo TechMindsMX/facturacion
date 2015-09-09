@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 import com.tim.one.billing.services.GuardaServicio
 import com.tim.one.billing.state.ApplicationState
-import finkok.stamp.demo.AcuseRecepcionCFDI
+import finkok.stamp.prod.AcuseRecepcionCFDI
 
 /**
  * @author josdem

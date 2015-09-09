@@ -54,7 +54,8 @@ class FacturaServicioSpec extends Specification {
 		and: "Totales"
 		  def totales = new Total(
 			  total:16.00,
-			  subtotal:16.00
+			  subtotal:16.00,
+				folio:"B23"
 		  )
     when: "Solicitamos la factura"
       Factura factura = facturaServicio.generaFactura(datosDeFacturacion, emisor, receptor, conceptos, impuestos, totales)
@@ -70,6 +71,7 @@ class FacturaServicioSpec extends Specification {
       factura.datosDeFacturacion.tipoDeCambio
       factura.subTotal == 16.00
       factura.total == 16.00
+			factura.folio == "B23"
       factura.emisor == emisor
       factura.receptor == receptor
       factura.conceptos.get(0).descripcion == "Servicio de cafe"

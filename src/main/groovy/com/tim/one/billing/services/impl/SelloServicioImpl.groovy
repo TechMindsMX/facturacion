@@ -42,6 +42,9 @@ class SelloServicioImpl implements SelloServicio {
 	
 	@Override
 	String generaSello(String cadenaOriginal) {
+		log.info("keyPath: " + keyPath);
+		log.info("password: " + password);
+		
     File KeyPath = new File(keyPath);
     byte[] key = Files.readAllBytes(KeyPath.toPath());
 

@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service
 import com.tim.one.billing.services.CfdiServicio
 import com.tim.one.billing.services.TimbraServicio
 import com.tim.one.billing.state.ApplicationState
-import finkok.stamp.demo.AcuseRecepcionCFDI
-import finkok.stamp.demo.Application
-import finkok.stamp.demo.Incidencia
-import finkok.stamp.demo.IncidenciaArray
-import finkok.stamp.demo.StampSOAP
+import finkok.stamp.prod.AcuseRecepcionCFDI
+import finkok.stamp.prod.Application
+import finkok.stamp.prod.Incidencia
+import finkok.stamp.prod.IncidenciaArray
+import finkok.stamp.prod.StampSOAP
 
 
 /**
@@ -50,6 +50,7 @@ class TimbraServicioImpl implements TimbraServicio {
 	AcuseRecepcionCFDI timbra(File file) {
 		File fileSellado = cfdiServicio.sella(file)
 		byte[] factura = fileSellado.getBytes()
+		log.info "username: ${username}, password: ${password}"
 		def acuse = application.stamp(factura, username, password)
 
 		if (acuse.getXml() != null) {

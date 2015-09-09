@@ -85,6 +85,7 @@ class FacturaServicioImpl implements FacturaServicio {
     factura.subTotal = totales.subtotal
 		factura.totalImpuestosTrasladados = totales.totalImpuestosTrasladados
     factura.total = totales.total
+		factura.folio = totales.folio
 
     factura
   }
@@ -95,7 +96,6 @@ class FacturaServicioImpl implements FacturaServicio {
     def engine = new groovy.text.SimpleTemplateEngine()
     def file = new File(templateXml)
     def text = file.text
-
     def result = engine.createTemplate(text).make(factura.properties)
     def temporalXmlFile= File.createTempFile(System.currentTimeMillis().toString(),".xml")
     temporalXmlFile.text = result
