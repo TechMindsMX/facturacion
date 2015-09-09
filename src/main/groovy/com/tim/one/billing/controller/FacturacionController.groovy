@@ -22,12 +22,13 @@ import com.tim.one.billing.command.FacturaCancelCommand
 import com.tim.one.billing.command.FacturaCreateCommand
 import com.tim.one.billing.command.FacturaShowCommand
 import com.tim.one.billing.command.FacturaValidCommand
-import com.tim.one.billing.response.CancelResponse;
+import com.tim.one.billing.response.CancelResponse
 import com.tim.one.billing.services.CancelaServicio
 import com.tim.one.billing.services.FacturaServicio
 import com.tim.one.billing.services.GuardaServicio
 import com.tim.one.billing.services.TimbraServicio
 import com.tim.one.billing.services.ValidaServicio
+import com.google.gson.JsonSyntaxException
 
 
 /**
@@ -57,23 +58,29 @@ class FacturacionController {
 	def createFacturaWithoutGeneratingFolio(@RequestBody String json, HttpServletResponse response) {
 		log.info("GENERATING factura")
 		log.info("json: " + json);
-		FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
-		log.info("command: " + command.dump())
 		
-		def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos, command.totales)
-
-		if(command.getTimbra()){
-			def acuse = timbraServicio.timbra(file)
-			file = guardaServicio.save(acuse)
-		}
-		
-		def fis = new FileInputStream(file)
-		response.setContentType("application/xml")
-		response.setCharacterEncoding("UTF-8");
-		response.setContentLength(((int) file.size()))
-		response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
-
-		FileCopyUtils.copy(fis, response.getOutputStream())
+		try{
+			FacturaCreateCommand command = new Gson().fromJson(json, FacturaCreateCommand.class)
+		  log.info("command: " + command.dump())
+					
+			def file = facturaServicio.generaXmlDeFactura(command.datosDeFacturacion, command.emisor, command.receptor, command.conceptos, command.impuestos, command.totales)
+					
+			if(command.getTimbra()){
+			  def acuse = timbraServicio.timbra(file)
+				file = guardaServicio.save(acuse)
+			}
+			
+			def fis = new FileInputStream(file)
+			response.setContentType("application/xml")
+			response.setCharacterEncoding("UTF-8");
+			response.setContentLength(((int) file.size()))
+			response.setHeader("Content-Disposition","attachment filename=\"" + file.name +"\"")
+			
+			FileCopyUtils.copy(fis, response.getOutputStream())
+		}catch (JsonSyntaxException jse){
+    	log.warn (jse, jse)
+      return new ResponseEntity<String>(jse.getMessage(), HttpStatus.BAD_REQUEST)
+    }
 		null
 	}
 	
