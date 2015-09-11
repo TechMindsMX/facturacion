@@ -25,7 +25,7 @@
     <sec:http pattern="/services/**" create-session="never"
         entry-point-ref="oauthAuthenticationEntryPoint">
         <sec:anonymous enabled="false" />
-        <sec:intercept-url pattern="/services/**" method="GET" access="IS_AUTHENTICATED_FULLY" />
+        <sec:intercept-url pattern="/services/**" method="POST" access="IS_AUTHENTICATED_FULLY" />
         <sec:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
         <sec:access-denied-handler ref="oauthAccessDeniedHandler" />
     </sec:http>
@@ -60,9 +60,7 @@
  
     <bean id="clientDetails" class="com.tim.web.security.oauth2.GuestServiceImpl">
         <property name="integraKey" value="integra" />
-        <property name="integraSecret" value="e6e68d8a-baf9-4880-aece-7774ffd4fb22" />
-        <property name="kpmgKey" value="kpmg" />
-        <property name="kpmgSecret" value="d2ec83d9-37d3-48f7-bbe5-f666213a85a9" />
+        <property name="integraSecret" value="e6e68d8a-baf9-4880-aece-7774ffd4fb22" />        
     </bean>
     
     <bean id="userValidator" class="com.tim.web.security.oauth2.UserValidatorImpl" />
@@ -87,22 +85,14 @@
     <oauth:resource-server id="resourceServerFilter"
         resource-id="springsec" token-services-ref="tokenServices" />
  
-    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.JdbcTokenStore">
-    	<constructor-arg ref="jdbcTemplate" /> 
+    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore">
     </bean>
     
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-      <property name="url" value="jdbc:mysql://localhost:3306/oauthdb_factura"/>
-      <property name="username" value="oauthdbUser"/>
-      <property name="password" value="04uthDB"/>
-    </bean>
- 
     <bean id="tokenServices"
         class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
         <property name="tokenStore" ref="tokenStore" />
         <property name="supportRefreshToken" value="true" />
-        <property name="accessTokenValiditySeconds" value="600"></property>
+        <property name="accessTokenValiditySeconds" value="60"></property>
         <property name="clientDetailsService" ref="clientDetails" />
     </bean>
  
