@@ -8,13 +8,15 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		
-	<context:component-scan base-package="com.tim.one.billing" />
-	
   	<mvc:annotation-driven />		
+	<context:component-scan base-package="com.tim.one" />
 		
-	<import resource="classpath:/services-appctx.xml" />
 	<import resource="classpath:/jms-appctx.xml" />
 	<import resource="classpath:/properties-appctx.xml" />
+	
+	<mvc:interceptors>
+    <bean class="com.tim.one.billing.interceptor.LoggerInterceptor" />
+  	</mvc:interceptors>
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"

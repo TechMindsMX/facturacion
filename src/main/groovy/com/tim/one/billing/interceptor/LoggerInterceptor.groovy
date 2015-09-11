@@ -1,9 +1,5 @@
 package com.tim.one.billing.interceptor
 
-import java.util.Properties;
-
-import groovy.transform.AutoClone
-
 import javax.annotation.PostConstruct
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
