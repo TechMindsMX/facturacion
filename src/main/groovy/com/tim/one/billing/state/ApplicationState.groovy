@@ -13,6 +13,7 @@ interface ApplicationState {
 	static final String KEY_PATH = "key.path"
 	static final String KEY_CERT = "key.cert"
 	static final String KEY_PASSWORD = "key.password"
+	static final String WHITE_LIST = "white.list"
 	static final String FILE_SEPARATOR = System.getProperty("file.separator")
 	
 	/**
