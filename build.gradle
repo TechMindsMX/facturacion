@@ -86,7 +86,7 @@ task settingTestEnvironment(type:Copy){
 
 task settingLog4jProperties(type:Copy){
 	from "${System.getProperty('user.home')}/.factura/log4j-${currentEnvironment}.properties"
-	into "src/main/resources/config"
+	into "src/main/resources"
 	rename { String fileName -> fileName.replace("-${currentEnvironment}", '') }
 }
 
